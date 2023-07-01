@@ -1,15 +1,15 @@
 \input{model/Modello_Tesi}
 
+\input{glossary.tex}
+
 \begin{document}
 
 \begin{titlepage}
     \begin{center}
-        \includegraphics[scale=0.1]{images/logo.png}\\
-
-        %Per il frontespizio del dipartimenti di Ing. dell'Informazione commentare le riga precedente e decommentare la successiva
-        %\includegraphics[scale=0.2]{images/logo_unipd.png} \hfill \includegraphics[scale=0.2]{images/logo_dei.png}\\
-        \vspace{0.8cm}
-        \textsc{\LARGE Universit\`{a} degli Studi di Padova}\\
+        \includegraphics[scale=0.25]{images/logo_unipd.png} \hfill
+        \includegraphics[scale=0.25]{images/logo_dei.png}\\
+        \vspace{1.0cm}
+        \textsc{\LARGE University of Padova}\\
         \vspace{0.45cm}
         \textsc{\large Department of Information Engineering}\\
         \vspace{0.4cm}
@@ -17,7 +17,7 @@
         \textsc{\large Computer Engineering}\\
         \vfill
         % Title
-        { \LARGE \bfseries TITLEEEEEE
+        { \LARGE \bfseries INSERT TITLE HERE
         }\\
         \vfill
         \textit{\large Supervisor:} \hfill \textit{\large Candidate:}\\
@@ -31,47 +31,78 @@
 \end{titlepage}
 
 
-\thispagestyle{empty} %pagina bianca dopo il titolo
+\thispagestyle{empty} %Empty page after title
 \cleardoublepage
 
-\pagenumbering{roman} %numerazione romana per l'indice, l'abstract e i ringraziamenti
+\pagenumbering{roman} %Roman numerals for index
 \thispagestyle{empty}
 
 \clearpage{\pagestyle{plain}\cleardoublepage}
 \input{abstract.tex}
 
+\printglossaries
+
+% Index
 \clearpage{\pagestyle{plain}\cleardoublepage}
-\tableofcontents %Indice
-
-\clearpage{\pagestyle{plain}\cleardoublepage} %Numerazione araba per i capitoli
-\pagenumbering{arabic}
-
-\clearpage{\pagestyle{plain}\cleardoublepage} %Comando per iniziare il capitolo su pagina dispari
-\chapter{Bytefields} %Nome capitolo
-\label{chapter:bytefields} %Label per creare riferimenti al capitolo
-\input{bitfields.tex} %File in cui verrà scritto il capitolo
-
-
-\clearpage{\pagestyle{plain}\cleardoublepage} %Comando per iniziare il capitolo su pagina dispari
-\chapter{First Chapter} %Nome capitolo
-\label{chapter:primo_capitolo} %Label per creare riferimenti al capitolo
-\input{intro_cap1.tex} %File in cui verrà scritto il capitolo
+\tableofcontents
 
 \clearpage{\pagestyle{plain}\cleardoublepage}
-\chapter{Tables and images}
-\label{chapter:immagini_e_tabelle}
-\input{intro_cap2.tex}
+\pagenumbering{arabic} %Arabic numerals for chapters
 
-\clearpage{\pagestyle{plain}\cleardoublepage}
-\chapter{Formulas}
-\label{chapter:formule}
-\input{intro_cap3.tex}
+\chapter{Introduction}
+\label{chapter:introduction}
+\input{intro.tex}
 
-\clearpage{\pagestyle{plain}\cleardoublepage}
-\chapter{Pseudocode and code}
-\label{chapter:codice}
-\input{intro_cap4.tex}
+%\chapter{Capabilities}
+%\label{chapter:capabilities}
+%\input{capabilities.tex}
 
+%\chapter{Limitations}
+%\label{chapter:capabilities}
+%\input{capabilities.tex}
+
+\chapter{Bacco protocol}
+\label{chapter:protocol}
+\input{cap2_protocol.tex}
+
+%\chapter{Implementation}
+%\label{chapter:implementation}
+%\input{implementation.tex}
+
+%\chapter{Conclusions}
+%\label{chapter:conclusions}
+%\input{conclusions.tex}
+
+% Bibliography
 \clearpage{\pagestyle{plain}\cleardoublepage}
 \input{bibliography.tex}
 \end{document}
+
+%Examples
+
+%\clearpage{\pagestyle{plain}\cleardoublepage} %Start chapter on an odd numbered page
+%\chapter{Bytefields} %Chapter name
+%\label{chapter:bytefields} %Label for references
+%\input{bitfields.tex} %File for the actual chapter
+
+
+%\clearpage{\pagestyle{plain}\cleardoublepage}
+%\chapter{First Chapter}
+%\label{chapter:primo_capitolo}
+%\input{intro_cap1.tex}
+
+%\clearpage{\pagestyle{plain}\cleardoublepage}
+%\chapter{Tables and images}
+%\label{chapter:immagini_e_tabelle}
+%\input{intro_cap2.tex}
+
+%\clearpage{\pagestyle{plain}\cleardoublepage}
+%\chapter{Formulas}
+%\label{chapter:formule}
+%\input{intro_cap3.tex}
+
+%\clearpage{\pagestyle{plain}\cleardoublepage}
+%\chapter{Pseudocode and code}
+%\label{chapter:codice}
+%\input{intro_cap4.tex}
+
