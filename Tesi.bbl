@@ -1,3 +1,129 @@
-\begin{thebibliography}{}
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
 
-\end{thebibliography}
+\datalist[entry]{nty/global//global/global}
+  \entry{gsm_book}{book}{}
+    \name{author}{2}{}{%
+      {{hash=GVK}{%
+         family={Garg},
+         familyi={G\bibinitperiod},
+         given={Vijay\bibnamedelima K.},
+         giveni={V\bibinitperiod\bibinitdelim K\bibinitperiod},
+      }}%
+      {{hash=WJE}{%
+         family={Wilkes},
+         familyi={W\bibinitperiod},
+         given={Joseph\bibnamedelima E.},
+         giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Prentice Hall PTR}%
+    }
+    \strng{namehash}{GVKWJE1}
+    \strng{fullhash}{GVKWJE1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{isbn}{0139491244}
+    \field{title}{Principles and Applications of GSM}
+    \verb{url}
+    \verb https://dl.acm.org/doi/abs/10.5555/552293
+    \endverb
+    \field{year}{1998}
+  \endentry
+
+  \entry{lte_paper}{article}{}
+    \name{author}{5}{}{%
+      {{hash=GA}{%
+         family={Ghosh},
+         familyi={G\bibinitperiod},
+         given={Amitava},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=RR}{%
+         family={Ratasuk},
+         familyi={R\bibinitperiod},
+         given={Rapeepat},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=MB}{%
+         family={Mondal},
+         familyi={M\bibinitperiod},
+         given={Bishwarup},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=MN}{%
+         family={Mangalvedhe},
+         familyi={M\bibinitperiod},
+         given={Nitin},
+         giveni={N\bibinitperiod},
+      }}%
+      {{hash=TT}{%
+         family={Thomas},
+         familyi={T\bibinitperiod},
+         given={Tim},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{GA+1}
+    \strng{fullhash}{GARRMBMNTT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \verb{doi}
+    \verb 10.1109/MWC.2010.5490974
+    \endverb
+    \field{number}{3}
+    \field{title}{LTE-advanced: next-generation wireless broadband technology [Invited Paper]}
+    \field{volume}{17}
+    \field{journaltitle}{IEEE Wireless Communications}
+    \field{year}{2010}
+  \endentry
+
+  \entry{ftp_rfc}{report}{}
+    \name{author}{1}{}{%
+      {{hash=JPJR}{%
+         family={J.\bibnamedelima Postel},
+         familyi={J\bibinitperiod\bibinitdelim P\bibinitperiod},
+         given={J.\bibnamedelima Reynolds},
+         giveni={J\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{JPJR1}
+    \strng{fullhash}{JPJR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{J}
+    \field{sortinithash}{J}
+    \field{howpublished}{Internet Requests for Comments}
+    \field{number}{959}
+    \field{title}{{File transfer protocol (FTP)}}
+    \verb{url}
+    \verb https://datatracker.ietf.org/doc/html/rfc959
+    \endverb
+    \list{institution}{1}{%
+      {{Network Working Group}}%
+    }
+    \field{type}{{RFC}}
+    \field{year}{1985}
+  \endentry
+\enddatalist
+\endinput

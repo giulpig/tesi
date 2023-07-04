@@ -2,6 +2,8 @@
 
 \input{glossary.tex}
 
+\addbibresource{refs.bib}
+
 \begin{document}
 
 \begin{titlepage}
@@ -40,7 +42,7 @@
 \clearpage{\pagestyle{plain}\cleardoublepage}
 \input{abstract.tex}
 
-\printglossaries
+\printunsrtglossaries
 
 % Index
 \clearpage{\pagestyle{plain}\cleardoublepage}
@@ -74,8 +76,10 @@
 %\input{conclusions.tex}
 
 % Bibliography
-\clearpage{\pagestyle{plain}\cleardoublepage}
-\input{bibliography.tex}
+%\clearpage{\pagestyle{plain}\cleardoublepage}
+%\input{bibliography.tex}
+\nocite{*}
+\printbibliography
 \end{document}
 
 %Examples
