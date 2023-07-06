@@ -17,6 +17,35 @@
 \endgroup
 
 \datalist[entry]{nty/global//global/global}
+  \entry{gazzetta_potenza_868}{commentary}{}
+    \name{author}{1}{}{%
+      {{hash=dcM}{%
+         prefix={delle},
+         prefixi={d\bibinitperiod},
+         family={comunicazioni"},
+         familyi={c\bibinitperiod},
+         given={"Ministero},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{cMd1}
+    \strng{fullhash}{cMd1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{note}{"Band l $\Leftrightarrow 868,0-868,6 MHz"}
+    \field{title}{"Elenco delle interfacce per gli apparati radioelettrici - Apparati a corto raggio utilizzati per applicazioni generiche (es. telemetria, telecomandi, allarmi e simili)"}
+    \verb{url}
+    \verb https://www.gazzettaufficiale.it/atto/serie_generale/caricaArticolo?a
+    \verb rt.versione=1&art.idGruppo=0&art.flagTipoArticolo=1&art.codiceRedazio
+    \verb nale=05A00705&art.idArticolo=1&art.idSottoArticolo=1&art.idSottoArtic
+    \verb olo1=10&art.dataPubblicazioneGazzetta=2005-02-12&art.progressivo=0
+    \endverb
+    \field{month}{02}
+    \field{year}{2005}
+  \endentry
+
   \entry{gsm_book}{book}{}
     \name{author}{2}{}{%
       {{hash=GVK}{%

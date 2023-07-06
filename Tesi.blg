@@ -2,6 +2,10 @@ This is BibTeX, Version 0.99d (TeX Live 2023/Arch Linux)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Tesi.aux
 The style file: biblatex.bst
+White space in argument---line 54 of file Tesi.aux
+ : \citation{CITAZIONE
+ :                     PARAGRAFO REGOLAMENTAZIONE CHE DEVO ANCORA SCRIVERE}
+I'm skipping whatever remains of this command
 Reallocated glb_str_ptr (elt_size=8) to 20 items from 10.
 Reallocated global_strs (elt_size=200001) to 20 items from 10.
 Reallocated glb_str_end (elt_size=8) to 20 items from 10.
@@ -22,44 +26,45 @@ Database file #2: refs.bib
 Biblatex version: 3.19
 Reallocated wiz_functions (elt_size=8) to 9000 items from 6000.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
-You've used 4 entries,
+You've used 5 entries,
             6399 wiz_defined-function locations,
-            1226 strings with 9521 characters,
-and the built_in function-call counts, 28825 in all, are:
-= -- 2382
-> -- 407
-< -- 116
-+ -- 783
-- -- 145
-* -- 2034
-:= -- 3418
+            1232 strings with 10059 characters,
+and the built_in function-call counts, 34246 in all, are:
+= -- 2760
+> -- 496
+< -- 145
++ -- 916
+- -- 179
+* -- 2405
+:= -- 3975
 add.period$ -- 0
-call.type$ -- 4
-change.case$ -- 68
-chr.to.int$ -- 42
-cite$ -- 6
-duplicate$ -- 2692
-empty$ -- 2520
-format.name$ -- 207
-if$ -- 5881
+call.type$ -- 5
+change.case$ -- 77
+chr.to.int$ -- 48
+cite$ -- 8
+duplicate$ -- 3303
+empty$ -- 3032
+format.name$ -- 255
+if$ -- 6988
 int.to.chr$ -- 0
-int.to.str$ -- 8
+int.to.str$ -- 10
 missing$ -- 0
-newline$ -- 129
-num.names$ -- 167
-pop$ -- 1156
+newline$ -- 158
+num.names$ -- 208
+pop$ -- 1496
 preamble$ -- 1
-purify$ -- 85
+purify$ -- 96
 quote$ -- 0
-skip$ -- 671
+skip$ -- 832
 stack$ -- 0
-substring$ -- 4645
-swap$ -- 501
-text.length$ -- 103
-text.prefix$ -- 3
+substring$ -- 5293
+swap$ -- 637
+text.length$ -- 130
+text.prefix$ -- 4
 top$ -- 1
-type$ -- 119
+type$ -- 153
 warning$ -- 0
-while$ -- 405
+while$ -- 481
 width$ -- 0
-write$ -- 126
+write$ -- 154
+(There was 1 error message)
