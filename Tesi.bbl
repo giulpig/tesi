@@ -17,6 +17,32 @@
 \endgroup
 
 \datalist[entry]{nty/global//global/global}
+  \entry{alohanet}{article}{}
+    \name{author}{1}{}{%
+      {{hash=AN}{%
+         family={Abramson},
+         familyi={A\bibinitperiod},
+         given={N.},
+         giveni={N\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AN1}
+    \strng{fullhash}{AN1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \verb{doi}
+    \verb 10.1109/TIT.1985.1057021
+    \endverb
+    \field{number}{2}
+    \field{pages}{119\bibrangedash 123}
+    \field{title}{Development of the ALOHANET}
+    \field{volume}{31}
+    \field{journaltitle}{IEEE Transactions on Information Theory}
+    \field{year}{1985}
+  \endentry
+
   \entry{gazzetta_potenza_868}{commentary}{}
     \name{author}{1}{}{%
       {{hash=dcM}{%
@@ -34,7 +60,7 @@
     \field{labeltitlesource}{title}
     \field{sortinit}{C}
     \field{sortinithash}{C}
-    \field{note}{"Band l $\Leftrightarrow 868,0-868,6 MHz"}
+    \field{note}{"Band l $\Leftrightarrow$ 868,0-868,6 MHz"}
     \field{title}{"Elenco delle interfacce per gli apparati radioelettrici - Apparati a corto raggio utilizzati per applicazioni generiche (es. telemetria, telecomandi, allarmi e simili)"}
     \verb{url}
     \verb https://www.gazzettaufficiale.it/atto/serie_generale/caricaArticolo?a
