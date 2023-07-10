@@ -72,20 +72,34 @@ The LoRa PHY protocol does not cover the matter of sharing the communication lin
 connected deivices, thus it is necessary to define a method for doing so, in order to minimize interference and achieve
 a realiable exchange of information. Many techniques can be applied in the domain of both time and frequency. \\
 The Bacco protocol distributes the activity on the channel over time using slots reserved for each Sender, using a
-concept that was first introduced by the AlohaNet\cite{alohanet} protocol.
-
-
-\section{State machine description}
-In order to achieve dynamic addressing, 
+concept that was first introduced by the AlohaNet\cite{alohanet} protocol. The slots are equally distributed between
+the Senders, and the start of the frame is function of the identifier. The time delay between transmissions of each Sender is
+a constant value and it is called a cycle. At the end of each cycle, a slot is reserved for the Gateway to upload the
+data received from the Sender nodes to the Web Server.\\
+To make this possible, a 
 
 \subsection{Dynamic addressing}
 Dynamic addressing is achieved through the 
 
-Addressing of
-Sender nodes can be managed dynamically by the corresponding Gateway in order to seamlessly integrate new sensors into
-the network.
+Addressing of Sender nodes can be managed dynamically by the corresponding Gateway in order to seamlessly integrate new sensors into the network.
 
 \section{Interference mitigation techniques}
 - CAD
 - IQ inversion
 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/bacco_SF7_14dbm_125khz_power.pdf}
+    \caption{Power draw during transmission of a Bacco packet with payload size of 15 bytes, using SF7, 14dBm, 125kHz bandwidth}
+    \label{bacco SF7}
+\end{figure}
+delta time is 51.6ms and total energy is 21.3mJ
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/lorawan_SF7_14dbm_125khz_power.pdf}
+    \caption{Power draw during transmission of a LoRaWAN packet with payload size of 15 bytes, using SF7, 14dBm, 125kHz bandwidth}
+    \label{LoRaWAN SF7}
+\end{figure}
+delta time is 71.8ms and total energy is 30.8mJ

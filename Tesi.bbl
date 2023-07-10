@@ -16,62 +16,7 @@
   {}
 \endgroup
 
-\datalist[entry]{nty/global//global/global}
-  \entry{alohanet}{article}{}
-    \name{author}{1}{}{%
-      {{hash=AN}{%
-         family={Abramson},
-         familyi={A\bibinitperiod},
-         given={N.},
-         giveni={N\bibinitperiod},
-      }}%
-    }
-    \strng{namehash}{AN1}
-    \strng{fullhash}{AN1}
-    \field{labelnamesource}{author}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{A}
-    \field{sortinithash}{A}
-    \verb{doi}
-    \verb 10.1109/TIT.1985.1057021
-    \endverb
-    \field{number}{2}
-    \field{pages}{119\bibrangedash 123}
-    \field{title}{Development of the ALOHANET}
-    \field{volume}{31}
-    \field{journaltitle}{IEEE Transactions on Information Theory}
-    \field{year}{1985}
-  \endentry
-
-  \entry{gazzetta_potenza_868}{commentary}{}
-    \name{author}{1}{}{%
-      {{hash=dcM}{%
-         prefix={delle},
-         prefixi={d\bibinitperiod},
-         family={comunicazioni"},
-         familyi={c\bibinitperiod},
-         given={"Ministero},
-         giveni={M\bibinitperiod},
-      }}%
-    }
-    \strng{namehash}{cMd1}
-    \strng{fullhash}{cMd1}
-    \field{labelnamesource}{author}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{C}
-    \field{sortinithash}{C}
-    \field{note}{"Band l $\Leftrightarrow$ 868,0-868,6 MHz"}
-    \field{title}{"Elenco delle interfacce per gli apparati radioelettrici - Apparati a corto raggio utilizzati per applicazioni generiche (es. telemetria, telecomandi, allarmi e simili)"}
-    \verb{url}
-    \verb https://www.gazzettaufficiale.it/atto/serie_generale/caricaArticolo?a
-    \verb rt.versione=1&art.idGruppo=0&art.flagTipoArticolo=1&art.codiceRedazio
-    \verb nale=05A00705&art.idArticolo=1&art.idSottoArticolo=1&art.idSottoArtic
-    \verb olo1=10&art.dataPubblicazioneGazzetta=2005-02-12&art.progressivo=0
-    \endverb
-    \field{month}{02}
-    \field{year}{2005}
-  \endentry
-
+\datalist[entry]{none/global//global/global}
   \entry{gsm_book}{book}{}
     \name{author}{2}{}{%
       {{hash=GVK}{%
@@ -94,8 +39,6 @@
     \strng{fullhash}{GVKWJE1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
-    \field{sortinit}{G}
-    \field{sortinithash}{G}
     \field{isbn}{0139491244}
     \field{title}{Principles and Applications of GSM}
     \verb{url}
@@ -137,12 +80,10 @@
          giveni={T\bibinitperiod},
       }}%
     }
-    \strng{namehash}{GA+1}
+    \strng{namehash}{GARRMB+1}
     \strng{fullhash}{GARRMBMNTT1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
-    \field{sortinit}{G}
-    \field{sortinithash}{G}
     \verb{doi}
     \verb 10.1109/MWC.2010.5490974
     \endverb
@@ -154,30 +95,74 @@
   \endentry
 
   \entry{ftp_rfc}{report}{}
-    \name{author}{1}{}{%
-      {{hash=JPJR}{%
-         family={J.\bibnamedelima Postel},
-         familyi={J\bibinitperiod\bibinitdelim P\bibinitperiod},
-         given={J.\bibnamedelima Reynolds},
-         giveni={J\bibinitperiod\bibinitdelim R\bibinitperiod},
+    \name{author}{2}{}{%
+      {{hash=PJ}{%
+         family={Postel},
+         familyi={P\bibinitperiod},
+         given={J.},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=RJ}{%
+         family={Reynolds},
+         familyi={R\bibinitperiod},
+         given={J.},
+         giveni={J\bibinitperiod},
       }}%
     }
-    \strng{namehash}{JPJR1}
-    \strng{fullhash}{JPJR1}
+    \strng{namehash}{PJRJ1}
+    \strng{fullhash}{PJRJ1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
-    \field{sortinit}{J}
-    \field{sortinithash}{J}
     \field{howpublished}{Internet Requests for Comments}
     \field{number}{959}
-    \field{title}{{File transfer protocol (FTP)}}
+    \field{title}{File transfer protocol (FTP)}
     \verb{url}
     \verb https://datatracker.ietf.org/doc/html/rfc959
     \endverb
     \list{institution}{1}{%
-      {{Network Working Group}}%
+      {Network Working Group}%
     }
-    \field{type}{{RFC}}
+    \field{type}{RFC}
+    \field{year}{1985}
+  \endentry
+
+  \entry{gazzetta_potenza_868}{commentary}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Elenco delle interfacce per gli apparati radioelettrici - Apparati a corto raggio utilizzati per applicazioni generiche (es. telemetria, telecomandi, allarmi e simili)}
+    \verb{url}
+    \verb https://www.gazzettaufficiale.it/atto/serie_generale/caricaArticolo?a
+    \verb rt.versione=1&art.idGruppo=0&art.flagTipoArticolo=1&art.codiceRedazio
+    \verb nale=05A00705&art.idArticolo=1&art.idSottoArticolo=1&art.idSottoArtic
+    \verb olo1=10&art.dataPubblicazioneGazzetta=2005-02-12&art.progressivo=0
+    \endverb
+    \list{institution}{1}{%
+      {Ministero delle comunicazioni}%
+    }
+    \field{month}{02}
+    \field{year}{2005}
+  \endentry
+
+  \entry{alohanet}{article}{}
+    \name{author}{1}{}{%
+      {{hash=AN}{%
+         family={Abramson},
+         familyi={A\bibinitperiod},
+         given={N.},
+         giveni={N\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AN1}
+    \strng{fullhash}{AN1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \verb{doi}
+    \verb 10.1109/TIT.1985.1057021
+    \endverb
+    \field{number}{2}
+    \field{pages}{119\bibrangedash 123}
+    \field{title}{Development of the ALOHANET}
+    \field{volume}{31}
+    \field{journaltitle}{IEEE Transactions on Information Theory}
     \field{year}{1985}
   \endentry
 \enddatalist
