@@ -3,12 +3,12 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Tesi.aux
 The style file: biblatex.bst
 White space in argument---line 49 of file Tesi.aux
- : \citation{DESCRIZIONE
- :                       DEI RIPETITORI}
-I'm skipping whatever remains of this command
-White space in argument---line 58 of file Tesi.aux
  : \citation{CITAZIONE
- :                     PARAGRAFO REGOLAMENTAZIONE CHE DEVO ANCORA SCRIVERE}
+ :                     PARAGRAFO REGOLAMENTAZIONE?}
+I'm skipping whatever remains of this command
+White space in argument---line 55 of file Tesi.aux
+ : \citation{DESCRIZIONE
+ :                       DEI RIPETITORI?}
 I'm skipping whatever remains of this command
 Reallocated glb_str_ptr (elt_size=8) to 20 items from 10.
 Reallocated global_strs (elt_size=200001) to 20 items from 10.
@@ -30,45 +30,45 @@ Database file #2: refs.bib
 Biblatex version: 3.19
 Reallocated wiz_functions (elt_size=8) to 9000 items from 6000.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
-You've used 6 entries,
+You've used 8 entries,
             6399 wiz_defined-function locations,
-            1238 strings with 10133 characters,
-and the built_in function-call counts, 34968 in all, are:
-= -- 2703
-> -- 581
-< -- 171
-+ -- 1009
-- -- 220
-* -- 2241
-:= -- 3905
+            1247 strings with 10539 characters,
+and the built_in function-call counts, 38578 in all, are:
+= -- 2831
+> -- 609
+< -- 207
++ -- 1030
+- -- 233
+* -- 2366
+:= -- 3992
 add.period$ -- 0
-call.type$ -- 6
-change.case$ -- 101
-chr.to.int$ -- 48
-cite$ -- 10
-duplicate$ -- 3655
-empty$ -- 3063
-format.name$ -- 283
-if$ -- 7179
+call.type$ -- 8
+change.case$ -- 122
+chr.to.int$ -- 54
+cite$ -- 14
+duplicate$ -- 4139
+empty$ -- 3607
+format.name$ -- 285
+if$ -- 8018
 int.to.chr$ -- 0
-int.to.str$ -- 12
+int.to.str$ -- 16
 missing$ -- 0
-newline$ -- 169
-num.names$ -- 228
-pop$ -- 1798
+newline$ -- 197
+num.names$ -- 248
+pop$ -- 2435
 preamble$ -- 1
-purify$ -- 129
+purify$ -- 150
 quote$ -- 0
-skip$ -- 1018
+skip$ -- 1192
 stack$ -- 0
-substring$ -- 4750
-swap$ -- 709
-text.length$ -- 131
+substring$ -- 4855
+swap$ -- 865
+text.length$ -- 151
 text.prefix$ -- 0
 top$ -- 1
-type$ -- 187
+type$ -- 255
 warning$ -- 0
-while$ -- 496
+while$ -- 507
 width$ -- 0
-write$ -- 164
+write$ -- 190
 (There were 2 error messages)

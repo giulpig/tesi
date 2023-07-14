@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-07-01T16:40:00.206Z" agent="Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/114.0" etag="RLEOr7rSTVTk9qeCuoYq" version="21.5.2" type="device">
+<mxfile host="app.diagrams.net" modified="2023-07-11T12:33:59.851Z" agent="Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0" etag="LJuMCGY_qwPZkx9opmH7" version="21.6.1" type="device">
   <diagram name="Page-1" id="s8J1TcxqFYQ6ddYi1LZd">
-    <mxGraphModel dx="790" dy="780" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="986" dy="621" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -13,13 +13,13 @@
         <mxCell id="OrEuCBoS2tfW3R4WaEpJ-5" value="LoRa PHY layer" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="40" y="380" width="100" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="OrEuCBoS2tfW3R4WaEpJ-83" value="&lt;div&gt;GSM/LTE&lt;/div&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=classic;startFill=1;" parent="1" source="OrEuCBoS2tfW3R4WaEpJ-8" target="OrEuCBoS2tfW3R4WaEpJ-72" edge="1">
+        <mxCell id="OrEuCBoS2tfW3R4WaEpJ-83" value="&lt;div&gt;Internet&lt;/div&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=classic;startFill=1;" parent="1" source="OrEuCBoS2tfW3R4WaEpJ-8" target="OrEuCBoS2tfW3R4WaEpJ-72" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="OrEuCBoS2tfW3R4WaEpJ-8" value="&lt;div&gt;Gateway&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontStyle=1;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;textDirection=ltr;" parent="1" vertex="1">
           <mxGeometry x="250" y="170" width="270" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="OrEuCBoS2tfW3R4WaEpJ-12" value="&lt;div&gt;Mobile communication&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="OrEuCBoS2tfW3R4WaEpJ-12" value="GSM/LTE" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="410" y="320" width="100" height="50" as="geometry" />
         </mxCell>
         <mxCell id="OrEuCBoS2tfW3R4WaEpJ-17" value="MCU" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -42,7 +42,7 @@
         <mxCell id="OrEuCBoS2tfW3R4WaEpJ-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=classic;startFill=1;" parent="1" source="OrEuCBoS2tfW3R4WaEpJ-38" target="OrEuCBoS2tfW3R4WaEpJ-5" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="OrEuCBoS2tfW3R4WaEpJ-38" value="&lt;div&gt;Bacco protocol&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="OrEuCBoS2tfW3R4WaEpJ-38" value="&lt;div&gt;BaccoMAC&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="40" y="310" width="100" height="50" as="geometry" />
         </mxCell>
         <mxCell id="OrEuCBoS2tfW3R4WaEpJ-41" value="LoRa PHY layer" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -51,7 +51,7 @@
         <mxCell id="OrEuCBoS2tfW3R4WaEpJ-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=classic;startFill=1;" parent="1" source="OrEuCBoS2tfW3R4WaEpJ-44" target="OrEuCBoS2tfW3R4WaEpJ-41" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="OrEuCBoS2tfW3R4WaEpJ-44" value="Bacco protocol" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="OrEuCBoS2tfW3R4WaEpJ-44" value="Bacco MAC" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="260" y="250" width="100" height="50" as="geometry" />
         </mxCell>
         <mxCell id="OrEuCBoS2tfW3R4WaEpJ-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.421;exitY=0.005;exitDx=0;exitDy=0;entryX=0.141;entryY=0.986;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;exitPerimeter=0;" parent="1" source="OrEuCBoS2tfW3R4WaEpJ-44" target="OrEuCBoS2tfW3R4WaEpJ-17" edge="1">
@@ -70,12 +70,12 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="g8QXf6rc9VSClD6-mJ9F-1" value="LoRa" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="OrEuCBoS2tfW3R4WaEpJ-89" target="OrEuCBoS2tfW3R4WaEpJ-8">
+        <mxCell id="g8QXf6rc9VSClD6-mJ9F-1" value="LoRa" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="OrEuCBoS2tfW3R4WaEpJ-89" target="OrEuCBoS2tfW3R4WaEpJ-8" edge="1">
           <mxGeometry x="-0.0857" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="OrEuCBoS2tfW3R4WaEpJ-89" value="Sender0" style="rounded=1;whiteSpace=wrap;html=1;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;horizontal=1;fontStyle=1;labelBorderColor=none;labelBackgroundColor=none;" parent="1" vertex="1">
+        <mxCell id="OrEuCBoS2tfW3R4WaEpJ-89" value="&lt;div&gt;Sender&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;horizontal=1;fontStyle=1;labelBorderColor=none;labelBackgroundColor=none;" parent="1" vertex="1">
           <mxGeometry x="30" y="130" width="120" height="140" as="geometry" />
         </mxCell>
         <mxCell id="OrEuCBoS2tfW3R4WaEpJ-90" value="LoRa PHY layer" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -84,7 +84,7 @@
         <mxCell id="OrEuCBoS2tfW3R4WaEpJ-91" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=classic;startFill=1;" parent="1" source="OrEuCBoS2tfW3R4WaEpJ-92" target="OrEuCBoS2tfW3R4WaEpJ-90" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="OrEuCBoS2tfW3R4WaEpJ-92" value="&lt;div&gt;Bacco protocol&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="OrEuCBoS2tfW3R4WaEpJ-92" value="&lt;div&gt;Bacco MAC&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="40" y="140" width="100" height="50" as="geometry" />
         </mxCell>
         <mxCell id="OrEuCBoS2tfW3R4WaEpJ-101" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=classic;startFill=1;" parent="1" source="OrEuCBoS2tfW3R4WaEpJ-95" target="OrEuCBoS2tfW3R4WaEpJ-96" edge="1">
@@ -99,7 +99,7 @@
         <mxCell id="OrEuCBoS2tfW3R4WaEpJ-96" value="FTP" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="610" y="250" width="100" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="MxNxOGcgCHaeU--ms-jA-1" value="&lt;div&gt;TCP/IP stack&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="MxNxOGcgCHaeU--ms-jA-1" value="&lt;div&gt;Ethernet&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="610" y="320" width="100" height="50" as="geometry" />
         </mxCell>
       </root>

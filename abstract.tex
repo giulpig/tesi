@@ -10,12 +10,45 @@
 
 \begin{Abstract}
     \begin{changemargin}{1cm}{1cm}
-        Insert abstract here\\
-
-        Ideas for abstract:
-            - There's a high demand of LPWAN networks, especially in agriculture
-            - Low power usage means smaller devices and less maintenance (e.g.: battery swapping)
-            - A simple and cost effective solution could help a lot
+        Low Power Wide Area Networks (LPWAN) are getting very popular these days in Internet of Things (IoT) applications
+        thanks to their capability of both consuming low amounts of power and of covering long distances. This
+        technology is widely used in the 4$^{th}$ industrial era for manufacturing, health care, and automation in general.\\
+        This thesis has the objective to propose a Media Access Control (MAC) protocol called Bacco. It is based on LoRa
+        modulation and has a narrow focus on agricultural applications, where achieving high power efficiency is crucial due
+        to the lack of reliable power sources. Another aspect taken into consideration is the cost effectiveness of the
+        devices required to develop a functional network.\\
+        First, the thesis establishes an introduction of LoRa and LoRaWAN; then the requirements for a MAC protocol
+        used in LPWANs will be discussed. After that, there will be a description of the Bacco protocol itself, alongside with some
+        example applications of it.
 
     \end{changemargin}
 \end{Abstract}
+
+\newpage
+
+%%definisco il layout dell'abstract
+%\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+%\let\endchangemargin=\endlist
+
+%Genero l'ambiente per l'abstract
+\newcommand\nomesommario{Sommario}
+\newenvironment{Sommario}%
+{\begin{center}%
+\bfseries{\nomesommario} \end{center}}
+
+\begin{Sommario}
+    \begin{changemargin}{1cm}{1cm}
+        Le reti Low Power Area Network (LPWAN) stanno prendendo piede oggigiorno nel mondo dell'Internet of Things
+        (IoT) grazie al loro basso consumo energetico e alle ampie distanze che possono coprire. Questa tecnologia è
+        un caposaldo dell'industria di quarta generazione, soprattutto negli ambiti di manifattura, assistenza sanitaria e in
+        generale dell'automazione.\\
+        Questa tesi ha l'obiettivo di proporre un protocollo Media Access Control (MAC), chiamato Bacco. Questo sfrutta la
+        modulazione LoRa e si rivolge a applicazioni in ambito agricolo, dove è cruciale raggiungere
+        un'alta efficienza energetica data la mancanza di fonti energetiche affidabili. Un altro aspetto
+        che viene considerato è il costo dei dispositivi rischiesti per sviluppare una rete funzionale.\\
+        Inizialmente la tesi si occuperà di dare una breve introduzione a LoRa e LoRaWAN, per poi discutere i
+        requisiti di un protocollo MAC per LPWAN. Successivamente, verrà data una descrizione del funzionamento di
+        Bacco, accompagnata da alcuni esempi applicativi.
+
+    \end{changemargin}
+\end{Sommario}

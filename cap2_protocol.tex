@@ -1,26 +1,27 @@
 The goal of this chapter is to give a description of the \textit{Bacco} protocol and to discuss the
 implementation choices that were made in order to deploy it. This is achieved using a top-down ordering for the level
-of detail, meaning that the overview of the network is presented before its specifics.
+of detail, meaning that an overview of the network is presented before the specifics of the MAC protocol.
 
-\section{Overview}
-The network is built upon 3 fundamental categories of devices:
+\section{Network overview}
+I will start by describing a simple network that makes use of the protocol to better understand the integration of the
+Bacco protocol into an LPWAN. The network is built upon 4 categories of devices:
 
 \begin{description}[font=$\bullet$~\normalfont\scshape\color{blue!50!black}]
     \item [Sender node] - collects data and sends it to the gateway using LoRa
     \item [Repeater node] - listens to the incoming LoRa messages form Senders and sends them to a Gateway \footnote{The use of Repeaters where
-physical obstacles compromise the integrity of the signals is of very high
-relevance in agricultural contexts, since natural barriers such as hills can easily block \gls{VHF} radio signals.}
-    \item [Gateway node] - collects data coming from the sender nodes and sends it to the web server using the FTP
-        protocol over a mobile network such as \gls{GSM} or \gls{LTE}.. This node has
-        also the role of coorinating and syncronizing Sender nodes. It can be optionally configured to perform pre-processing operations (e.g.\ filtering, smoothing, interpolation ...) on the incoming data
-    \item [Web server] - receives data coming from the gateways through FTP, elaborates it and makes it available
-        through a self-hosted web application
+            physical obstacles compromise the integrity of the signals is of very high
+        relevance in agricultural contexts, since natural barriers such as hills can easily block \gls{VHF} radio signals.}
+    \item [Gateway node] - collects data coming from the sender nodes and sends it to the web server. In the example
+        shown, this will be achieved with the FTP protocol over a mobile network such as \gls{GSM} or \gls{LTE}. This node has
+        also the role of coorinating and syncronizing Sender nodes. It can also be optionally configured to perform pre-processing operations (e.g.\ filtering, smoothing, interpolation ...) on the incoming data
+    \item [Web server] - receives data coming from the Gateways, elaborates it and makes it available
+        through a web application
 \end{description}
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1.0\textwidth]{uml/network_stack.pdf}
-    \caption{Schematic representation of the protocols involved}
+    \caption{Schematic representation of the example network}
     \label{network stack img}
 \end{figure}
 
@@ -35,71 +36,149 @@ chlidren, so they correspond to the leaves of the tree.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=350pt]{uml/network_topology.pdf}
-    \caption{Network topology}
+    \caption{Example network topology}
     \label{network topology img}
 \end{figure}
 
 \section{Addressing}
-The addressing scheme follows from the hierarchical structure of the network.\\
-A first description of the addressing algorithm is given in the case where there's a fixed number of nodes connected to the
-network. Later the procedure will be extended in order to achieve the addition or removal of nodes from the network.
-Note that since repeaters do not modify the repeated message (see \cite{DESCRIZIONE DEI RIPETITORI} for a detailed
-desription), they are transparent to the other nodes ad thus they will be treated as straight edges by the addressing
-algoritm. Note also that since there is only one central Web Server, it is redundant to assign it an identifier.
+It is crucial to identify each Sender node in order to contextualize the messages coming to the Gateway node.
+This is achieved by assigning them a unique identifier, represented by a natural number in the range $\[0,255\]$.
+This fact limits the number of Sender nodes connected to a single Gateway to 256 \footnote{This choice is influenced
+    by the current Italian regulations\cite{CITAZIONE PARAGRAFO REGOLAMENTAZIONE?} \cite{gazzetta_potenza_868} on duty cycle
+for the 868MHz band and the fact that most agricultural contexts do not require a huge amount of sensors}. If necessary,
+the network can scale up by using additional Gateways.
+Note that since repeaters do not modify the forwarded messages (see \cite{DESCRIZIONE DEI RIPETITORI?} for a detailed
+desription), they are transparent to the other nodes ad thus they will not be given an identifier.
 
-\subsection{Static addressing}
-In order to uniquely identify each node in a static network represented as a tree, we can apply the following procedure:
-\begin{itemize}
-    \item{May $T$ be a tree and may $r$ be its root node}
-    \item{May $\{T_{i}\}$ be a forest of substrees with cardinality of $I$, where $T_{i}$ is a subtree rooted in the child node
-        $i$ of $r$, and $I$ is equal to the degree of $r$ }
-    \item{For each root node $i$, assing it an identifier that is unique among the other $i$s. In particular the integers
-        contained in the interval $\[1,I\]$ will be used to represent each node}
-    \item{For each $T_{i}$ apply the same procedure from the first step in a recursive way}
-    \item{After applying this algorithm to every possible subtree down to the leaves, each node will have a unique
-        identifier among its sibiling nodes}
-    \item{Now, to get a unique identifier among all the network for every node, we can concatenate the identifiers
-        generated by the algorithm for each ancestors of the node, starting from the root and traversing the tree form parent to child}
-\end{itemize}
+\section{Interference mitigation}
+The LoRa PHY protocol specification does not fully cover the matter of sharing the communication link between multiple
+devices, thus it is necessary to define mothods for doing so, in order to minimize interference and achieve
+a realiable exchange of information. Different techniques are applied in the domain of both time and frequency
 
-Each Gateway is manually given a static and unique identifier based on its physical location in the range $\[0,65535\]$.
-The maximun number of Sender nodes connected to a single Gateway is limited to 256 \footnote{This choice is influenced
-by the current Italian regulations\cite{CITAZIONE PARAGRAFO REGOLAMENTAZIONE CHE
-DEVO ANCORA SCRIVERE} \cite{gazzetta_potenza_868} on duty cycle for the 868MHz band and the fact that most agricultural contexts do not require a huge amount of sensors}.
+\subsection{Channel activity detection}
+Channel Activity Detection, or CAD, is a feature available for most LoRa transcievers\cite{cad}. In this mode, the LoRa node
+listens for any transmission on a specific frequency; if it detects a signal, it retuns an interrupt to the MCU. This
+presents a possible Carrier Sense Multiple Access mechanism, also called CSMA.\\
+Bacco does not make use of CAD for data packets, but it enables it in specific situations such as network discovery (discussed
+in section \ref{Network discovery}).
 
-\section{Distribution of transmission activity}
-The LoRa PHY protocol does not cover the matter of sharing the communication link between multiple
-connected deivices, thus it is necessary to define a method for doing so, in order to minimize interference and achieve
-a realiable exchange of information. Many techniques can be applied in the domain of both time and frequency. \\
-The Bacco protocol distributes the activity on the channel over time using slots reserved for each Sender, using a
-concept that was first introduced by the AlohaNet\cite{alohanet} protocol. The slots are equally distributed between
-the Senders, and the start of the frame is function of the identifier. The time delay between transmissions of each Sender is
-a constant value and it is called a cycle. At the end of each cycle, a slot is reserved for the Gateway to upload the
-data received from the Sender nodes to the Web Server.\\
-To make this possible, a 
+\subsection{IQ inversion}
+IQ inversion is a LoRa primitive that makes it possible to have 2 modes of transmissions that are easily
+distinguishable for a receiver. The name stands for \emph{In-phase / Quadrature}, and it usually refers to
+signals that are out of phase from each other by $\frac{\pi}{4}$ rad. Despite of that, LoRa uses that term to describe
+2 signal with inverted chirp direction, namely up-chirp and down-chirp. Bacco uses this technique to discriminate between uplink messages (i.e. from Sender to
+Gateway/Repeater) and downlink messages (i.e. from Gateway to Sender/Repeater). This implies that devices belonging to
+the same category are not able to communicate with each other (e.g. a Sender would not detect other Senders' transmissions).
 
-\subsection{Dynamic addressing}
-Dynamic addressing is achieved through the 
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.45\linewidth}
+        \begin{subfigure}[b]{\linewidth}
+            \begin{tikzpicture}
+                \begin{axis}[width=\linewidth, height=4cm, title={\textbf{Up-chirp}}, xlabel={Time [ms]}, ylabel={Amplitude [V]}]
+                    \addplot[color=red, samples=500][domain=0:1]{sin(x*x*5000)};
+                \end{axis}
+            \end{tikzpicture}
+        \end{subfigure}
+        \begin{subfigure}[b]{\linewidth}
+            \begin{tikzpicture}
+                \begin{axis}[width=\linewidth, height=4cm, title={\textbf{Down-chirp}}, xlabel={Time [ms]}, ylabel={Amplitude [V]}]
+                    \addplot[color=blue, samples=500][domain=0:1]{sin(5000*(1-x)*(1-x))};
+                \end{axis}
+            \end{tikzpicture}
+        \end{subfigure}
+    \end{subfigure}
+    \hspace{0.08\linewidth}
+    \begin{subfigure}[b]{0.45\linewidth}
+        \begin{tikzpicture}
+            \begin{axis}[width=\linewidth, height=8cm + \baselineskip, title={\textbf{Frequency plot}}, xlabel={Time
+                [ms]}, ylabel={Frequency [Hz]}, ytick={0, 0.5, 1}, yticklabels={$F_0-\frac{B}{2}$, $F_0$, $F_0+\frac{B}
+                {2}$}, legend entries={Down-chirp, Up-chirp}]
+                \addplot[line width=0.5mm, color=blue, samples=500][domain=0:1]{1-x};
+                \addplot[line width=0.5mm, color=red, samples=500][domain=0:1]{x};
+            \end{axis}
+        \end{tikzpicture}
+    \end{subfigure}
+\end{figure}
 
-Addressing of Sender nodes can be managed dynamically by the corresponding Gateway in order to seamlessly integrate new sensors into the network.
-
-\section{Interference mitigation techniques}
-- CAD
-- IQ inversion
-
+\subsection{Subnetting}
+The LoRa procol supports a wide range of carrier frequencies in the \gls{VHF} spectrum \footnote{For reference, the
+SX1262\cite{sx1262} transciever features a continuous frequency coverage from 150 MHz to 960 MHz}. This feature makes
+it possible to apply various techniques to mitigate interference.\\
+Bacco exploits it to build sub-networks that operate at different frequencies, and thus achieve a communication with very low
+interference between different sub-nets. Specifically, all the Sender nodes connected to a Repeater and the Repeater
+itself operate at a frequency that's different from the frequency used by the Gateway and other Repeaters. Figure \ref{repeaters
+subnet} shows a schematic representation.\\
+It is necessary to define a set of possible frequencies at which Repeaters and Gateways operate. This is done 
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1.0\textwidth]{images/bacco_SF7_14dbm_125khz_power.pdf}
-    \caption{Power draw during transmission of a Bacco packet with payload size of 15 bytes, using SF7, 14dBm, 125kHz bandwidth}
-    \label{bacco SF7}
+    \includegraphics[width=\linewidth]{uml/repeaters_subnet.pdf}
+    \caption{Example network with repeaters in subnets}
+    \label{repeaters subnet}
 \end{figure}
-delta time is 51.6ms and total energy is 21.3mJ
 
-\begin{figure}[ht]
+
+\subsection{Distribution of transmission activity}
+The Bacco protocol distributes the activity on the channel over time using defined frames reserved for each Sender, using
+an approach that was first introduced by the AlohaNet\cite{alohanet} protocol. The frames are equally distributed between
+all the Senders and the start of each transmission frame is function of the identifier. The time delay between 2 consecutive
+transmissions from a same Sender is a constant value and it is called cycle. At the end of a cycle, some time is
+reserved for the Gateway to upload the collected data. Figure \ref{timing diagram} shows a schematic representation of
+the time slot management used by Bacco. The cycle time is a user-defined parameter, and all the other values are
+calculated based on it as shown in table \ref{timing table}. \\
+
+\begin{table}[ht]
     \centering
-    \includegraphics[width=1.0\textwidth]{images/lorawan_SF7_14dbm_125khz_power.pdf}
-    \caption{Power draw during transmission of a LoRaWAN packet with payload size of 15 bytes, using SF7, 14dBm, 125kHz bandwidth}
-    \label{LoRaWAN SF7}
-\end{figure}
-delta time is 71.8ms and total energy is 30.8mJ
+    \setlength{\extrarowheight}{5pt}
+    \begin{tabular}{ |c|c| }
+        \hline
+        Parameter & Value\\
+        \hline
+        Gateway frame time & $0.2 \cdot C$\\
+        Sender frame time & $\frac{0.6 \cdot C}{N}$\\
+        Silence frame time & $\frac{0.2 \cdot C}{N}$\\
+        \hline
+    \end{tabular}
+    \caption{Time parameters calculation, where C is the cycle time and N is the number of Senders}
+    \label{timing table}
+\end{table}
+
+\begin{sidewaysfigure}
+    \centering
+    \includegraphics[clip, trim=0cm 25.2cm 0cm 0cm, width=1.0\textwidth]{uml/timings.pdf}
+    \caption{Timing diagram}
+    \label{timing diagram}
+\end{sidewaysfigure}
+
+\subsubsection{Time syncing on clock drift}
+All the devices in the network need to transmit during their assigned frame for the protocol to be effective; this means
+that all the clocks are required to have a certain degree of syncronization. This is hard to achieve in
+practice, because the commercial clock oscillators do not provide a costant frequency source due to manifacturing imprecisions,
+temperature gradient etc... .\\
+In order to deal with with this problem, Bacco assigns the Gateway node the role of coordinating the network timings through
+the dispatch of downlink messages containing the network timestamp when a Sender
+node transmits out of its assigned frame. The downlink message is sent as soon as the Gateway receives the uplink
+message. Figure \ref{timing diagram} shows this behavior during the transmission involving Sender2.
+
+\section{Network discovery}
+\label{Network discovery}
+
+
+\section{Network joining}
+When a Sender node is first connected to a Gateway node, it does not yet have an identifier nor is in sync with the
+network. The process of assigning such nodes an identifier and syncing its clock is called the network joining process.
+The first case that we will cover is the simplest one, that occours when the network has no Repeater nodes; in this case
+the Sender nodes sends a \textit{join request} message to the Gateway on the 868 MHz default channel, and then waits for
+a response for 2 seconds. The process is repeated until the Sender receives a \textit{join accepted} message or a
+\textit{join rejected} message. If a join accepted message is received, then the Sender goes to sleep and tries to join
+after 1 hour. 
+
+
+\section{Transmission power adaption}
+
+\section{Packet format}
+
+\subsubsection{Uplink packet format}
+
+\subsubsection{Downlink packet format}

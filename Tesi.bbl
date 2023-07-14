@@ -142,6 +142,34 @@
     \field{year}{2005}
   \endentry
 
+  \entry{cad}{manual}{}
+    \list{organization}{1}{%
+      {Semtech}%
+    }
+    \field{labeltitlesource}{title}
+    \field{title}{Channel Activity Detection: Ensuring Your LoRa Packets are sent}
+    \verb{url}
+    \verb https://lora-developers.semtech.com/documentation/tech-papers-and-gui
+    \verb des/channel-activity-detection-ensuring-your-lora-packets-are-sent/ho
+    \verb w-to-ensure-your-lora-packets-are-sent-properly/
+    \endverb
+  \endentry
+
+  \entry{sx1262}{manual}{}
+    \list{organization}{1}{%
+      {Semtech}%
+    }
+    \field{labeltitlesource}{title}
+    \field{note}{Rev. 2.1}
+    \field{title}{SX1261/2 datasheet}
+    \verb{url}
+    \verb https://semtech.my.salesforce.com/sfc/p/E0000000JelG/a/2R000000Un7F/y
+    \verb T.fKdAr9ZAo3cJLc4F2cBdUsMftpT2vsOICP7NmvMo
+    \endverb
+    \field{month}{12}
+    \field{year}{2021}
+  \endentry
+
   \entry{alohanet}{article}{}
     \name{author}{1}{}{%
       {{hash=AN}{%
