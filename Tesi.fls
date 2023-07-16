@@ -1824,6 +1824,11 @@ INPUT uml/timings.pdf
 INPUT ./uml/timings.pdf
 INPUT ./uml/timings.pdf
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
+INPUT ./uml/network_joining.pdf
+INPUT ./uml/network_joining.pdf
+INPUT uml/network_joining.pdf
+INPUT ./uml/network_joining.pdf
+INPUT ./uml/network_joining.pdf
 INPUT ./cap3_performance.tex
 INPUT cap3_performance.tex
 INPUT ./cap3_performance.tex

@@ -35,20 +35,20 @@ chlidren, so they correspond to the leaves of the tree.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=350pt]{uml/network_topology.pdf}
+    \includegraphics[width=1.0\linewidth]{uml/network_topology.pdf}
     \caption{Example network topology}
     \label{network topology img}
 \end{figure}
 
 \section{Addressing}
 It is crucial to identify each Sender node in order to contextualize the messages coming to the Gateway node.
-This is achieved by assigning them a unique identifier, represented by a natural number in the range $\[0,255\]$.
-This fact limits the number of Sender nodes connected to a single Gateway to 256 \footnote{This choice is influenced
-    by the current Italian regulations\cite{CITAZIONE PARAGRAFO REGOLAMENTAZIONE?} \cite{gazzetta_potenza_868} on duty cycle
-for the 868MHz band and the fact that most agricultural contexts do not require a huge amount of sensors}. If necessary,
-the network can scale up by using additional Gateways.
-Note that since repeaters do not modify the forwarded messages (see \cite{DESCRIZIONE DEI RIPETITORI?} for a detailed
-desription), they are transparent to the other nodes ad thus they will not be given an identifier.
+This is achieved by assigning them a unique identifier, represented by a natural number in the range $\[1,254\]$.
+Address 0 is reserved for the Receiver and address 255 is used as a globally invalid address.
+This fact limits the number of Sender nodes connected to a single Gateway to 254 \footnote{This choice is influenced
+by the current Italian regulations \colorbox{red}{TODO: Scrivi e inserisci citazione a paragrafo su regolamentazione e
+calcolo numero massumo di devices} \cite{CITAZIONE PARAGRAFO REGOLAMENTAZIONE E CALCOLO MASSIMO NUMERO DI DEVICES} \cite{gazzetta_potenza_868} on duty cycle for the 868MHz band and the fact that most agricultural contexts do not require a huge amount of sensors}. If necessary, the network can scale up by using additional Gateways.
+Note that since Repeaters do not modify the forwarded messages and do not produce messages themselves, they do not play
+an active role in the network and thus they will not be given an identifier.
 
 \section{Interference mitigation}
 The LoRa PHY protocol specification does not fully cover the matter of sharing the communication link between multiple
@@ -108,8 +108,20 @@ it possible to apply various techniques to mitigate interference.\\
 Bacco exploits it to build sub-networks that operate at different frequencies, and thus achieve a communication with very low
 interference between different sub-nets. Specifically, all the Sender nodes connected to a Repeater and the Repeater
 itself operate at a frequency that's different from the frequency used by the Gateway and other Repeaters. Figure \ref{repeaters
-subnet} shows a schematic representation.\\
-It is necessary to define a set of possible frequencies at which Repeaters and Gateways operate. This is done 
+subnet} shows a schematic representation. This technique is particularly useful to solve the problem of bouncing, that occours
+when a message is sent back to the original Repeater.\\
+It is necessary to define a set of frequencies at which Repeaters and Gateways operate. This choice is done
+based on current regulations in the specific country of operation; this thesis will focus on Italian and/or European
+standards. 868 MHz is the base frequency at which the Gateway node operates, and the set of 6 frequencies of operation
+is so composed:
+\begin{equation}
+\label{set of frequencies}
+\left\{ f_k : f_k = 868\text{MHz} + k \times 125\text{KHz}, k\in \left\{0..10 \right\} \right\}
+\end{equation}
+This implies that a Bacco network can have up to 10 Repeaters operating on different frequencies, however if more coverage
+is needed, it is possible to have multiple Repeater nodes working at the same frequency, given that they are not in
+reach with each other.
+
 
 \begin{figure}[ht]
     \centering
@@ -151,10 +163,10 @@ calculated based on it as shown in table \ref{timing table}. \\
     \label{timing diagram}
 \end{sidewaysfigure}
 
-\subsubsection{Time syncing on clock drift}
+\subsubsection{Compensating clock drift}
 All the devices in the network need to transmit during their assigned frame for the protocol to be effective; this means
 that all the clocks are required to have a certain degree of syncronization. This is hard to achieve in
-practice, because the commercial clock oscillators do not provide a costant frequency source due to manifacturing imprecisions,
+practice, because all commercial clock oscillators do not provide a costant frequency source due to manifacturing imprecisions,
 temperature gradient etc... .\\
 In order to deal with with this problem, Bacco assigns the Gateway node the role of coordinating the network timings through
 the dispatch of downlink messages containing the network timestamp when a Sender
@@ -163,17 +175,61 @@ message. Figure \ref{timing diagram} shows this behavior during the transmission
 
 \section{Network discovery}
 \label{Network discovery}
+When a Sender node is first started, it needs to decide at what frequency it has to operate for minimizing the power
+needed to reach a Repeater or Gateway. In order to do this, Bacco introduces method \ref{algo:network discovery}
+for scanning nearby devices and selecting the most suitable. It tries to establish a communication with Repeaters and
+Gateways spanning all the available frequencies by sending a particular type of message that triggers a response
+containing a SYN/ACK message. Note that the CAD technique will be used by the Sender to not interfere with ongoing
+communications because the board does not yet have an allocated time frame.
+
+\begin{algorithm}
+    \caption{Network discovery algorithm}\label{algo:network discovery}
+    \begin{algorithmic}
+
+        \State rssi\_values $\gets$ $\[0,0,0,0,0,0,0,0,0,0\]$
+
+        \While{all rssi\_values are equal to 0}
+            \For{$k$ from 0 to 10}
+                \State $f_k$ $\gets$ $868 \times 10^6 + k \times 125 * 10^3$
+                \For{$i$ from 0 to 10}
+                    \Do
+                        \State sleep for 1 second
+                        \State enter CAD mode at frequency $f_k$ for 1.5 seconds
+                    \doWhile{activity detected by CAD}
+                    \State send sensing message
+                    \State enter receive mode for 3 seconds
+                    \If{received SYN/ACK}
+                        \State rssi\_values\[k\] $\gets$ current rssi
+                        \State \textbf{break}
+                    \EndIf
+                \EndFor
+            \EndFor
+        \EndWhile
+    \end{algorithmic}
+\end{algorithm}
 
 
 \section{Network joining}
-When a Sender node is first connected to a Gateway node, it does not yet have an identifier nor is in sync with the
-network. The process of assigning such nodes an identifier and syncing its clock is called the network joining process.
-The first case that we will cover is the simplest one, that occours when the network has no Repeater nodes; in this case
-the Sender nodes sends a \textit{join request} message to the Gateway on the 868 MHz default channel, and then waits for
-a response for 2 seconds. The process is repeated until the Sender receives a \textit{join accepted} message or a
-\textit{join rejected} message. If a join accepted message is received, then the Sender goes to sleep and tries to join
-after 1 hour. 
+When a Sender node needs to connect to a Gateway node for the first time, it does not yet have an identifier nor is in
+sync with the network. The procedure to achieve that will be called the joining process. Note that we assume that the
+Sender node has already selected its frequency of operation, as descibed in section \ref{Network discovery}.\\
+We will ignore the act of forwarding made by an optional Repeater node, as it is transparent for both ends of the
+communication. All the messages sent from Sender and Receiver make use of CAD to make sure the channel is free before
+the actual transmission; this step will be omitted in the description for brevity. First, the Sender transmits a SYN
+message to the Gateway and waits for a SYN/ACK response for 3 seconds. If no message is received, another SYN message
+is sent for a maximum of 10 times. After that, the Gateway waits for 3 seconds for an ACK message from the Receiver, and
+if no message is received it will try again for a maximum of 10 times. The SYN/ACK message contains the timestamp of
+the network as well as the assigned identifier. If the maximum number of iterations are reached in any of the steps, the
+whloe process starts again after 30 minutes. Figure \ref{img: network joining} show a schematic representation of the process.
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=200pt]{uml/network_joining.pdf}
+    \caption{Network joining process}
+    \label{img: network joining}
+\end{figure}
+
+\section{Downlink commands}
 
 \section{Transmission power adaption}
 
