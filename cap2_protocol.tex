@@ -63,14 +63,16 @@ Bacco does not make use of CAD for data packets, but it enables it in specific s
 in section \ref{Network discovery}).
 
 \subsection{IQ inversion}
-IQ inversion is a LoRa primitive that makes it possible to have 2 modes of transmissions that are easily
+IQ inversion is a LoRa primitive that makes it possible to have 2 types of transmissions on the same frequency and
+spreading factor that are easily
 distinguishable for a receiver. The name stands for \emph{In-phase / Quadrature}, and it usually refers to
 signals that are out of phase from each other by $\frac{\pi}{4}$ rad. Despite of that, LoRa uses that term to describe
-2 signal with inverted chirp direction, namely up-chirp and down-chirp. Bacco uses this technique to discriminate between uplink messages (i.e. from Sender to
+2 signal with inverted chirp direction, namely up-chirp and down-chirp (see figure \ref{img: iq inversion}). Bacco uses this technique to discriminate between uplink messages (i.e. from Sender to
 Gateway/Repeater) and downlink messages (i.e. from Gateway to Sender/Repeater). This implies that devices belonging to
 the same category are not able to communicate with each other (e.g. a Sender would not detect other Senders' transmissions).
 
 \begin{figure}
+    \label{img: iq inversion}
     \centering
     \begin{subfigure}[b]{0.45\linewidth}
         \begin{subfigure}[b]{\linewidth}
@@ -99,6 +101,7 @@ the same category are not able to communicate with each other (e.g. a Sender wou
             \end{axis}
         \end{tikzpicture}
     \end{subfigure}
+    \caption{IQ inversion}
 \end{figure}
 
 \subsection{Subnetting}
@@ -145,10 +148,12 @@ calculated based on it as shown in table \ref{timing table}. \\
     \setlength{\extrarowheight}{5pt}
     \begin{tabular}{ |c|c| }
         \hline
-        Parameter & Value\\
+        \textbf{Parameter} & \textbf{Value}\\
         \hline
         Gateway frame time & $0.2 \cdot C$\\
+        \hline
         Sender frame time & $\frac{0.6 \cdot C}{N}$\\
+        \hline
         Silence frame time & $\frac{0.2 \cdot C}{N}$\\
         \hline
     \end{tabular}
@@ -172,6 +177,8 @@ In order to deal with with this problem, Bacco assigns the Gateway node the role
 the dispatch of downlink messages containing the network timestamp when a Sender
 node transmits out of its assigned frame. The downlink message is sent as soon as the Gateway receives the uplink
 message. Figure \ref{timing diagram} shows this behavior during the transmission involving Sender2.
+The Gateway sends at least one downlink message every 10 uplink messages from a same Sender, to ensure syncing and to
+signal that the connection is still active.
 
 \section{Network discovery}
 \label{Network discovery}
@@ -213,7 +220,7 @@ communications because the board does not yet have an allocated time frame.
 When a Sender node needs to connect to a Gateway node for the first time, it does not yet have an identifier nor is in
 sync with the network. The procedure to achieve that will be called the joining process. Note that we assume that the
 Sender node has already selected its frequency of operation, as descibed in section \ref{Network discovery}.\\
-We will ignore the act of forwarding made by an optional Repeater node, as it is transparent for both ends of the
+We will ignore the act of forwarding made by any optional Repeater node, as in this case is transparent for both ends of the
 communication. All the messages sent from Sender and Receiver make use of CAD to make sure the channel is free before
 the actual transmission; this step will be omitted in the description for brevity. First, the Sender transmits a SYN
 message to the Gateway and waits for a SYN/ACK response for 3 seconds. If no message is received, another SYN message
@@ -230,8 +237,83 @@ whloe process starts again after 30 minutes. Figure \ref{img: network joining} s
 \end{figure}
 
 \section{Downlink commands}
+In some situations (e.g. \ref{sec: transmission power adaption}), it is required to be able to change the behavior of the
+network dynamically and in a reliable way. Bacco achieves this by exhanging specialized kind of packets that contain a
+command. Each command message needs to be acknowledged by the Sender to the Gateway/Repeater in a similar way as done during the
+network joining procedure. Figure \ref{img: command ack} offers a graphical representation. Every command is associated
+to an opcode, as shown in table \ref{tab: opcodes}.\\
+
+The following commands are defined by the protocol:
+\begin{description}[font=$\bullet$~\normalfont\scshape\color{blue!50!black}]
+    \item [Shutdown] - If this command is sent and processed successfully, the Sender goes to sleep indefinetly until a manual reset is invoked by physically pressing a button
+    \item [Enter quiescent mode] - If this command is sent and processed successfully, the Sender stops to send data, but it keeps
+        listening during its time frame
+    \item [Wakeup from quiescent mode] - If this command is sent and processed successfully, the Sender enters normal/active mode
+        and thus starts to transmit data again
+    \item [Increase transmission power] - If this command is sent and processed successfully, the Sender increases its
+        transmit power by 3dBm
+    \item [Decrease transmission power] - If this command is sent and processed successfully, the Sender deceases its
+        transmit power by 3dBm
+\end{description}
+
+\begin{table}[ht]
+    \centering
+    %\setlength{\extrarowheight}{5pt}
+    \begin{tabular}{ |c|c| }
+        \hline
+        \textbf{Command} & \textbf{Opcode as unsigned integer}\\
+        \hline
+        Shutdown & 0\\
+        \hline
+        Enter quiscent mode & 1\\
+        \hline
+        Wakeup from quiescent mode & 2\\
+        \hline
+        Increase transmission power & 3\\
+        \hline
+        Decrease transmission power & 4\\
+        \hline
+        Reserved for later use & [4-50]\\
+        \hline
+        User defined & [51-127]\\
+        \hline
+    \end{tabular}
+    \caption{Table of opcodes}
+    \label{tab: opcodes}
+\end{table}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=200pt]{uml/command_ack.pdf}
+    \caption{Command sending process}
+    \label{img: command ack}
+\end{figure}
 
 \section{Transmission power adaption}
+\label{sec: transmission power adaption}
+Since Senders can be placed at different distances from a Gateway or Repeater, it is useful to optimize the power
+used by the node to transmit. The default value for the transmission power is equal to $P_{0}$; starting from that, the
+network will automatically drift towards a more suitable value according to the
+following triggers:
+\begin{itemize}
+    \item If on the Sender side, the device has not received any downlink messages during
+        the last 20 frames belonging to it, then \textbf{increase TX power} by $P_{step}$
+    \item If on the recevier side (either Repeater or Gateway), all the last 10 transmission
+        satisfy $\text{RSSI} < \text{RSSI}_{high}$ and $\text{SNR} < \text{SNR}_{high}$ or have not been received, then
+        send a command message to the Sender telling to \textbf{decrease TX power} by $P_{step}$
+    \item If on the recevier side (either Repeater or Gateway), all the last 10 transmission
+        satisfy $\text{RSSI} > \text{RSSI}_{high}$, then send a command message to the Sender telling to
+        \textbf{decrease TX power} by $P_{step}$.
+\end{itemize}
+Here the parameters are shown:
+\begin{equation}
+    \begin{array}{l}
+        P_{0} = P_{max} = 14\text{ dBm} \\ P_{step} = 3\text{ dBm} \\ \text{RSSI}_{low} = -115\text{ dBm} \\ \text{RSSI}
+        _{high} = -60\text{ dBm} \\ \text{SNR}_{low} = -7\text{ dBm}
+    \end{array}
+\end{equation}
+Gateways and Repeaters always operate at $P_{0}$, since power efficiency is less critical than reliability for such nodes.
+
 
 \section{Packet format}
 
