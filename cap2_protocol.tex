@@ -72,7 +72,6 @@ Gateway/Repeater) and downlink messages (i.e. from Gateway to Sender/Repeater). 
 the same category are not able to communicate with each other (e.g. a Sender would not detect other Senders' transmissions).
 
 \begin{figure}
-    \label{img: iq inversion}
     \centering
     \begin{subfigure}[b]{0.45\linewidth}
         \begin{subfigure}[b]{\linewidth}
@@ -101,6 +100,7 @@ the same category are not able to communicate with each other (e.g. a Sender wou
             \end{axis}
         \end{tikzpicture}
     \end{subfigure}
+    \label{img: iq inversion}
     \caption{IQ inversion}
 \end{figure}
 
@@ -206,7 +206,7 @@ communications because the board does not yet have an allocated time frame.
                     \State send sensing message
                     \State enter receive mode for 3 seconds
                     \If{received SYN/ACK}
-                        \State rssi\_values\[k\] $\gets$ current rssi
+                        \State $\text{rssi}\_values\[k\]$ $\gets$ current rssi
                         \State \textbf{break}
                     \EndIf
                 \EndFor
@@ -316,7 +316,69 @@ Gateways and Repeaters always operate at $P_{0}$, since power efficiency is less
 
 
 \section{Packet format}
+In this section the bit format of the messages is shown. The analysis will be split in uplink packets and downlink
+packets.
 
 \subsubsection{Uplink packet format}
+An uplink message is sent from a Sender to the Gateway, and can be optionally repeated by a Repeater. It has a variable
+length and it is transmitted using up-chirps, i.e without IQ inversion enabled. Figure \ref{img: uplink packet format} shows its
+format.
+
+\begin{figure}
+    \centering
+    \begin{bytefield}[]{32}
+        \bitheader{0,8,16} \\
+        \bitbox{8}{Sender ID} & \bitbox{8}{Payload size}
+                              & \bitbox{16}{Payload}
+    \end{bytefield}
+    \caption{Uplink packet format}
+    \label{img: uplink packet format}
+\end{figure}
+
 
 \subsubsection{Downlink packet format}
+A downlink message is sent from the Gateway to a Sender, and can be optionally repeated by a Repeater. It has a fixed
+length of 5 bytes and it is transmitted using down-chirps, i.e with IQ inversion enabled. Figure \ref{img: downlink
+packet format}, \ref{img: downlink timestamp packet format}, \ref{img: downlink commmand packet format} show its format.
+
+\newcommand{\bitlabel}[2]{%
+    \bitbox[]{#1}{%
+        \raisebox{0pt}[4ex][0pt]{%
+            \turnbox{65}{\fontsize{9}{9}\selectfont#2}%
+        }%
+    }%
+}
+\begin{figure}
+    \centering
+    \begin{bytefield}[]{40}
+        \bitlabel{8}{} & \bitlabel{1}{Message type} & \bitlabel{31}{}\\
+        \bitheader{0,8,9,39} \\
+        \bitbox{8}{Sender ID} & \bitbox{1}{}
+                              & \bitbox{31}{Payload}
+    \end{bytefield}
+    \caption{Downlink packet format}
+    \label{img: downlink packet format}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{bytefield}[]{40}
+        \bitheader{0,8,9,39} \\
+        \bitbox{8}{Sender ID} & \bitbox{1}{0}
+                              & \bitbox{31}{Timestamp}
+    \end{bytefield}
+    \caption{Downlunk timestamp packet format}
+    \label{img: downlink timestamp packet format}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{bytefield}[]{40}
+        \bitheader{0,8,9,39} \\
+        \bitbox{8}{Sender ID} & \bitbox{1}{1}
+                              & \bitbox{7}{Opcode}
+                              & \bitbox{24}{Padding}
+    \end{bytefield}
+    \caption{Downlunk command packet format}
+    \label{img: downlink command packet format}
+\end{figure}
