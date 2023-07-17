@@ -1,39 +1,42 @@
 The goal of this chapter is to give a description of the \textit{Bacco} protocol and to discuss the
 implementation choices that were made in order to deploy it. This is achieved using a top-down ordering for the level
-of detail, meaning that an overview of the network is presented before the specifics of the MAC protocol.
+of detail, meaning that the overview is presented before the specifics.
 
-\section{Network overview}
-I will start by describing a simple network that makes use of the protocol to better understand the integration of the
-Bacco protocol into an LPWAN. The network is built upon 4 categories of devices:
+\section{Overview and case of study}
+We will now start describing a simple scenario that makes use of the protocol to better understand the integration of
+Bacco into an LPWAN. The network is built upon 4 categories of devices:
 
 \begin{description}[font=$\bullet$~\normalfont\scshape\color{blue!50!black}]
-    \item [Sender node] - collects data and sends it to the gateway using LoRa
-    \item [Repeater node] - listens to the incoming LoRa messages form Senders and sends them to a Gateway \footnote{The use of Repeaters where
-            physical obstacles compromise the integrity of the signals is of very high
-        relevance in agricultural contexts, since natural barriers such as hills can easily block \gls{VHF} radio signals.}
-    \item [Gateway node] - collects data coming from the sender nodes and sends it to the web server. In the example
-        shown, this will be achieved with the FTP protocol over a mobile network such as \gls{GSM} or \gls{LTE}. This node has
-        also the role of coorinating and syncronizing Sender nodes. It can also be optionally configured to perform pre-processing operations (e.g.\ filtering, smoothing, interpolation ...) on the incoming data
+    \item [Sender node] - collects data and sends it to the gateway
+    \item [Repeater node] - listens to the incoming messages from Senders and forwards them to a Gateway \footnote{The
+        use of Repeaters where physical obstacles compromise the integrity of the signals is of very high relevance in
+        agricultural contexts, since natural barriers such as hills can easily block \gls{VHF} radio signals.}
+    \item [Gateway node] - collects data coming from the sender nodes and sends it to the web server. This node has
+        the role of coorinating and syncronizing Sender nodes. In the example
+        shown in figure \ref{img: network stack}, this is achieved using the FTP protocol over a
+        \gls{GSM} or \gls{LTE} mobile network. It can be optionally configured to perform
+        pre-processing operations (e.g. filtering, smoothing, interpolation ...) on the incoming data
     \item [Web server] - receives data coming from the Gateways, elaborates it and makes it available
-        through a web application
+        through a web application. Note that the scheme of communication involving this device is not covered by
+        Bacco
 \end{description}
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth]{uml/network_stack.pdf}
-    \caption{Schematic representation of the example network}
-    \label{network stack img}
+    \caption{Schematic representation of an example network using Bacco}
+    \label{img: network stack}
 \end{figure}
 
 \section{Topology}
 The network has a star-of-stars topology, in which the zeroth level is occupied by the Web server, the first level by the
 Gateways and Repeaters, and the second level contains the Senders.
 Figure \ref{network topology img} shows the type of devices that are involved and their communication schema. \\
-The structure is equivalent to a tree, hence we can define a hierarchy of nodes. The root node is the central web server
-and its children nodes are the Gateways. All sender nodes are children of either a Gateway or a Repeater and have to
+The structure is equivalent to a tree, hence we can define a hierarchy for the nodes. The root node is the central web server
+and its children nodes are the Gateways. All sender nodes are children of either a Gateway or a Repeater and have no
 chlidren, so they correspond to the leaves of the tree.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=1.0\linewidth]{uml/network_topology.pdf}
     \caption{Example network topology}
@@ -46,32 +49,36 @@ This is achieved by assigning them a unique identifier, represented by a natural
 Address 0 is reserved for the Receiver and address 255 is used as a globally invalid address.
 This fact limits the number of Sender nodes connected to a single Gateway to 254 \footnote{This choice is influenced
 by the current Italian regulations \colorbox{red}{TODO: Scrivi e inserisci citazione a paragrafo su regolamentazione e
-calcolo numero massumo di devices} \cite{CITAZIONE PARAGRAFO REGOLAMENTAZIONE E CALCOLO MASSIMO NUMERO DI DEVICES} \cite{gazzetta_potenza_868} on duty cycle for the 868MHz band and the fact that most agricultural contexts do not require a huge amount of sensors}. If necessary, the network can scale up by using additional Gateways.
-Note that since Repeaters do not modify the forwarded messages and do not produce messages themselves, they do not play
-an active role in the network and thus they will not be given an identifier.
+calcolo numero massumo di devices} \cite{CITAZIONE PARAGRAFO REGOLAMENTAZIONE E CALCOLO MASSIMO NUMERO DI DEVICES}
+\cite{gazzetta_potenza_868} on duty cycle for the 868MHz band and the fact that most agricultural contexts do not
+require a huge amount of sensors}. If necessary, the network can scale up by using additional Gateways.
+Note that since Repeaters do not produce messages themselves nor they modify the forwarded ones, they will not be
+given an identifier.
 
 \section{Interference mitigation}
 The LoRa PHY protocol specification does not fully cover the matter of sharing the communication link between multiple
-devices, thus it is necessary to define mothods for doing so, in order to minimize interference and achieve
-a realiable exchange of information. Different techniques are applied in the domain of both time and frequency
+devices, thus it is necessary to define methods for doing so, in order to minimize interference and achieve
+a realiable exchange of information. Different techniques are applied in the domain of both time and frequency.
 
 \subsection{Channel activity detection}
-Channel Activity Detection, or CAD, is a feature available for most LoRa transcievers\cite{cad}. In this mode, the LoRa node
-listens for any transmission on a specific frequency; if it detects a signal, it retuns an interrupt to the MCU. This
+Channel Activity Detection, or CAD, is a feature available with most LoRa transcievers\cite{cad}. In this mode, the LoRa node
+listens for any transmission on a specific frequency and, if it detects a signal, an interrupt is returned to the MCU. This
 presents a possible Carrier Sense Multiple Access mechanism, also called CSMA.\\
 Bacco does not make use of CAD for data packets, but it enables it in specific situations such as network discovery (discussed
 in section \ref{Network discovery}).
 
 \subsection{IQ inversion}
 IQ inversion is a LoRa primitive that makes it possible to have 2 types of transmissions on the same frequency and
-spreading factor that are easily
+spreading factor, that are easily
 distinguishable for a receiver. The name stands for \emph{In-phase / Quadrature}, and it usually refers to
-signals that are out of phase from each other by $\frac{\pi}{4}$ rad. Despite of that, LoRa uses that term to describe
-2 signal with inverted chirp direction, namely up-chirp and down-chirp (see figure \ref{img: iq inversion}). Bacco uses this technique to discriminate between uplink messages (i.e. from Sender to
-Gateway/Repeater) and downlink messages (i.e. from Gateway to Sender/Repeater). This implies that devices belonging to
-the same category are not able to communicate with each other (e.g. a Sender would not detect other Senders' transmissions).
+signals that are out of phase from each other by $\frac{\pi}{4}$ rad. Despite that, LoRa uses the term to describe
+2 signal with inverted chirp direction, namely up-chirp and down-chirp (see figure \ref{img: iq inversion}).\\
+Bacco uses this technique to discriminate between uplink messages (i.e. from Sender to
+Gateway/Repeater and fom Repeater to Gateway) and downlink messages (i.e. from Gateway to Sender/Repeater and from
+Repeater to Sender). This implies that Sender nodes and Gateway nodes are not able to communicate with other devices of
+the same category (e.g. a Sender would not detect any transmission coming from a Sender).
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \begin{subfigure}[b]{0.45\linewidth}
         \begin{subfigure}[b]{\linewidth}
@@ -100,33 +107,32 @@ the same category are not able to communicate with each other (e.g. a Sender wou
             \end{axis}
         \end{tikzpicture}
     \end{subfigure}
-    \label{img: iq inversion}
     \caption{IQ inversion}
+    \label{img: iq inversion}
 \end{figure}
 
 \subsection{Subnetting}
 The LoRa procol supports a wide range of carrier frequencies in the \gls{VHF} spectrum \footnote{For reference, the
-SX1262\cite{sx1262} transciever features a continuous frequency coverage from 150 MHz to 960 MHz}. This feature makes
-it possible to apply various techniques to mitigate interference.\\
-Bacco exploits it to build sub-networks that operate at different frequencies, and thus achieve a communication with very low
-interference between different sub-nets. Specifically, all the Sender nodes connected to a Repeater and the Repeater
+SX1262\cite{sx1262} transciever features a continuous frequency coverage from 150 MHz to 960 MHz}.\\
+Bacco exploits this fact to build sub-networks that operate at different frequencies, and thus it achieves a communication with very low
+interference between different the independent parts. All the Sender nodes connected to a Repeater and the Repeater
 itself operate at a frequency that's different from the frequency used by the Gateway and other Repeaters. Figure \ref{repeaters
 subnet} shows a schematic representation. This technique is particularly useful to solve the problem of bouncing, that occours
-when a message is sent back to the original Repeater.\\
-It is necessary to define a set of frequencies at which Repeaters and Gateways operate. This choice is done
+when a message is sent back to the original Repeater from another Repeater.\\
+It is necessary to define a set of frequencies at which the nodes operate. This choice is done
 based on current regulations in the specific country of operation; this thesis will focus on Italian and/or European
-standards. 868 MHz is the base frequency at which the Gateway node operates, and the set of 6 frequencies of operation
+standards. 868 MHz is the base frequency at which the Gateway node operates. The set of 11 frequencies of operation
 is so composed:
 \begin{equation}
 \label{set of frequencies}
-\left\{ f_k : f_k = 868\text{MHz} + k \times 125\text{KHz}, k\in \left\{0..10 \right\} \right\}
+f = \left\{ f_k : f_k = 868\text{MHz} + k \times 125\text{KHz}, k\in \left\{0..10 \right\} \right\}
 \end{equation}
-This implies that a Bacco network can have up to 10 Repeaters operating on different frequencies, however if more coverage
+This implies that a Bacco network can have up to 10 Repeaters operating at different frequencies, however if more coverage
 is needed, it is possible to have multiple Repeater nodes working at the same frequency, given that they are not in
 reach with each other.
 
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{uml/repeaters_subnet.pdf}
     \caption{Example network with repeaters in subnets}
@@ -135,29 +141,27 @@ reach with each other.
 
 
 \subsection{Distribution of transmission activity}
-The Bacco protocol distributes the activity on the channel over time using defined frames reserved for each Sender, using
+The Bacco protocol distributes radio activity over time with defined frames reserved for each Sender, using
 an approach that was first introduced by the AlohaNet\cite{alohanet} protocol. The frames are equally distributed between
-all the Senders and the start of each transmission frame is function of the identifier. The time delay between 2 consecutive
+all the Senders and the start of each of them is function of the identifier. The time delay between 2 consecutive
 transmissions from a same Sender is a constant value and it is called cycle. At the end of a cycle, some time is
 reserved for the Gateway to upload the collected data. Figure \ref{timing diagram} shows a schematic representation of
-the time slot management used by Bacco. The cycle time is a user-defined parameter, and all the other values are
+the time management used by Bacco. The cycle time is a user-defined parameter, and all the other values are
 calculated based on it as shown in table \ref{timing table}. \\
 
-\begin{table}[ht]
+\begin{table}[h]
     \centering
-    \setlength{\extrarowheight}{5pt}
+    \setlength{\extrarowheight}{7pt}
     \begin{tabular}{ |c|c| }
         \hline
         \textbf{Parameter} & \textbf{Value}\\
         \hline
         Gateway frame time & $0.2 \cdot C$\\
-        \hline
-        Sender frame time & $\frac{0.6 \cdot C}{N}$\\
-        \hline
-        Silence frame time & $\frac{0.2 \cdot C}{N}$\\
+        Sender frame time & $\frac{0.6 \cdot C}{N_{max}}$\\
+        Silence frame time & $\frac{0.2 \cdot C}{N_{max}}$\\
         \hline
     \end{tabular}
-    \caption{Time parameters calculation, where C is the cycle time and N is the number of Senders}
+    \caption{Time parameters calculation. C is the cycle time and $N_{max} = 254$ is the maximum number of Senders}
     \label{timing table}
 \end{table}
 
@@ -170,14 +174,14 @@ calculated based on it as shown in table \ref{timing table}. \\
 
 \subsubsection{Compensating clock drift}
 All the devices in the network need to transmit during their assigned frame for the protocol to be effective; this means
-that all the clocks are required to have a certain degree of syncronization. This is hard to achieve in
-practice, because all commercial clock oscillators do not provide a costant frequency source due to manifacturing imprecisions,
+that all the clocks of the devices are required to be in sync. This is hard to achieve without dynamic recalibration,
+because commercial oscillators cannot provide a constant frequency source due to manifacturing imprecisions,
 temperature gradient etc... .\\
 In order to deal with with this problem, Bacco assigns the Gateway node the role of coordinating the network timings through
-the dispatch of downlink messages containing the network timestamp when a Sender
-node transmits out of its assigned frame. The downlink message is sent as soon as the Gateway receives the uplink
-message. Figure \ref{timing diagram} shows this behavior during the transmission involving Sender2.
-The Gateway sends at least one downlink message every 10 uplink messages from a same Sender, to ensure syncing and to
+the dispatch of downlink messages containing the network timestamp. A downlink message is sent as soon as the Gateway
+receives an uplink message that exceedes its correct time frame. Figure \ref{timing diagram} shows this behavior during
+the transmission involving Sender2.
+Additionally, the Gateway sends at least 1 downlink message every 10 uplink messages from a same Sender, to
 signal that the connection is still active.
 
 \section{Network discovery}
@@ -185,12 +189,12 @@ signal that the connection is still active.
 When a Sender node is first started, it needs to decide at what frequency it has to operate for minimizing the power
 needed to reach a Repeater or Gateway. In order to do this, Bacco introduces method \ref{algo:network discovery}
 for scanning nearby devices and selecting the most suitable. It tries to establish a communication with Repeaters and
-Gateways spanning all the available frequencies by sending a particular type of message that triggers a response
-containing a SYN/ACK message. Note that the CAD technique will be used by the Sender to not interfere with ongoing
-communications because the board does not yet have an allocated time frame.
+Gateways throughout all the available frequencies by sending a particular type of message that triggers a SYN/ACK
+response. CAD will be used by the Sender to not interfere with ongoing communications; this is because the board does
+not yet have an allocated time frame and thus cannot decide when to transmit otherwise.
 
-\begin{algorithm}
-    \caption{Network discovery algorithm}\label{algo:network discovery}
+\begin{algorithm}[h]
+    \caption{Network discovery}\label{algo:network discovery}
     \begin{algorithmic}
 
         \State rssi\_values $\gets$ $\[0,0,0,0,0,0,0,0,0,0\]$
@@ -212,6 +216,7 @@ communications because the board does not yet have an allocated time frame.
                 \EndFor
             \EndFor
         \EndWhile
+        \State \textbf{return} $868 \times 10^6 + \text{argmin(rssi\_values)} \times  125 * 10^3$
     \end{algorithmic}
 \end{algorithm}
 
@@ -220,16 +225,17 @@ communications because the board does not yet have an allocated time frame.
 When a Sender node needs to connect to a Gateway node for the first time, it does not yet have an identifier nor is in
 sync with the network. The procedure to achieve that will be called the joining process. Note that we assume that the
 Sender node has already selected its frequency of operation, as descibed in section \ref{Network discovery}.\\
-We will ignore the act of forwarding made by any optional Repeater node, as in this case is transparent for both ends of the
-communication. All the messages sent from Sender and Receiver make use of CAD to make sure the channel is free before
-the actual transmission; this step will be omitted in the description for brevity. First, the Sender transmits a SYN
-message to the Gateway and waits for a SYN/ACK response for 3 seconds. If no message is received, another SYN message
-is sent for a maximum of 10 times. After that, the Gateway waits for 3 seconds for an ACK message from the Receiver, and
-if no message is received it will try again for a maximum of 10 times. The SYN/ACK message contains the timestamp of
-the network as well as the assigned identifier. If the maximum number of iterations are reached in any of the steps, the
-whloe process starts again after 30 minutes. Figure \ref{img: network joining} show a schematic representation of the process.
+We will ignore the act of forwarding made by any optional Repeater node, as in this case it does not affect the
+content of the messages, but note that delay and error rate would raise in that situation. All the messages sent from Sender
+and Receiver make use of CAD to make sure the channel is free before the actual transmission; this step will be omitted
+in the description for brevity. First, the Sender transmits a SYN message to the Gateway and waits for a SYN/ACK
+response for 3 seconds. If no message is received, another SYN message is sent for a maximum of 10 times. After that,
+the Gateway waits for 3 seconds for an ACK message from the Receiver, and if no message is received it will try again
+for a maximum of 10 times. The SYN/ACK message contains the timestamp of the network as well as the assigned identifier.
+If the maximum number of iterations is reached in any of the steps, the process starts again after 30 minutes.
+Figure \ref{img: network joining} show a schematic representation of the process.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=200pt]{uml/network_joining.pdf}
     \caption{Network joining process}
@@ -240,34 +246,34 @@ whloe process starts again after 30 minutes. Figure \ref{img: network joining} s
 In some situations (e.g. \ref{sec: transmission power adaption}), it is required to be able to change the behavior of the
 network dynamically and in a reliable way. Bacco achieves this by exhanging specialized kind of packets that contain a
 command. Each command message needs to be acknowledged by the Sender to the Gateway/Repeater in a similar way as done during the
-network joining procedure. Figure \ref{img: command ack} offers a graphical representation. Every command is associated
-to an opcode, as shown in table \ref{tab: opcodes}.\\
-
-The following commands are defined by the protocol:
+network joining procedure. Figure \ref{img: command ack} offers a graphical representation of the process.\\
+The following commands are defined by the protocol, and each of them is associated to an opcode as shown in table
+\ref{tab: opcodes}:
 \begin{description}[font=$\bullet$~\normalfont\scshape\color{blue!50!black}]
-    \item [Shutdown] - If this command is sent and processed successfully, the Sender goes to sleep indefinetly until a manual reset is invoked by physically pressing a button
-    \item [Enter quiescent mode] - If this command is sent and processed successfully, the Sender stops to send data, but it keeps
-        listening during its time frame
-    \item [Wakeup from quiescent mode] - If this command is sent and processed successfully, the Sender enters normal/active mode
-        and thus starts to transmit data again
-    \item [Increase transmission power] - If this command is sent and processed successfully, the Sender increases its
+    \item [Shutdown] - If this command is sent and processed successfully, the Sender goes to sleep indefinetly until a
+        manual reset is invoked by pressing a physical button
+    \item [Enter quiescent mode] - If this command is processed successfully, the Sender stops to send data, but it keeps
+        listening for incoming messages/commands during its time frame
+    \item [Wakeup] - If this command is processed successfully, the Sender enters normal/active mode
+        and thus starts to transmit data
+    \item [Increase transmission power] - If this command is processed successfully, the Sender increases its
         transmit power by 3dBm
-    \item [Decrease transmission power] - If this command is sent and processed successfully, the Sender deceases its
+    \item [Decrease transmission power] - If this command is processed successfully, the Sender deceases its
         transmit power by 3dBm
 \end{description}
 
-\begin{table}[ht]
+\begin{table}[h]
     \centering
     %\setlength{\extrarowheight}{5pt}
     \begin{tabular}{ |c|c| }
         \hline
-        \textbf{Command} & \textbf{Opcode as unsigned integer}\\
+        \textbf{Command} & \textbf{Opcode as 7 bit unsigned integer}\\
         \hline
         Shutdown & 0\\
         \hline
         Enter quiscent mode & 1\\
         \hline
-        Wakeup from quiescent mode & 2\\
+        Wakeup & 2\\
         \hline
         Increase transmission power & 3\\
         \hline
@@ -282,7 +288,7 @@ The following commands are defined by the protocol:
     \label{tab: opcodes}
 \end{table}
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=200pt]{uml/command_ack.pdf}
     \caption{Command sending process}
@@ -296,16 +302,16 @@ used by the node to transmit. The default value for the transmission power is eq
 network will automatically drift towards a more suitable value according to the
 following triggers:
 \begin{itemize}
-    \item If on the Sender side, the device has not received any downlink messages during
-        the last 20 frames belonging to it, then \textbf{increase TX power} by $P_{step}$
-    \item If on the recevier side (either Repeater or Gateway), all the last 10 transmission
-        satisfy $\text{RSSI} < \text{RSSI}_{high}$ and $\text{SNR} < \text{SNR}_{high}$ or have not been received, then
-        send a command message to the Sender telling to \textbf{decrease TX power} by $P_{step}$
-    \item If on the recevier side (either Repeater or Gateway), all the last 10 transmission
-        satisfy $\text{RSSI} > \text{RSSI}_{high}$, then send a command message to the Sender telling to
-        \textbf{decrease TX power} by $P_{step}$.
+    \item If a Sender has not received any downlink messages during
+        the last 20 frames, then its transmission power will be increased by $P_{step}$
+    \item If 9 out of the last 10 messages received by a Repeater or a Gateway
+        satisfy $\text{RSSI} > \text{RSSI}_{high}$ and $\text{SNR} > \text{SNR}_{high}$, then
+        a command is sent to the Sender telling to decrease its transmission power by $P_{step}$
+    \item If 9 out of the last 10 messages received by a Repeater or a Gateway
+        satisfy $\text{RSSI} < \text{RSSI}_{low}$ or have not been received, then a command is sent to the Sender telling to
+        increase its TX power by $P_{step}$.
 \end{itemize}
-Here the parameters are shown:
+The values for the used parameters are shown here:
 \begin{equation}
     \begin{array}{l}
         P_{0} = P_{max} = 14\text{ dBm} \\ P_{step} = 3\text{ dBm} \\ \text{RSSI}_{low} = -115\text{ dBm} \\ \text{RSSI}
@@ -316,15 +322,15 @@ Gateways and Repeaters always operate at $P_{0}$, since power efficiency is less
 
 
 \section{Packet format}
-In this section the bit format of the messages is shown. The analysis will be split in uplink packets and downlink
+In this section the bit format of the messages is shown. The analysis will be split betqween uplink packets and downlink
 packets.
 
 \subsubsection{Uplink packet format}
-An uplink message is sent from a Sender to the Gateway, and can be optionally repeated by a Repeater. It has a variable
-length and it is transmitted using up-chirps, i.e without IQ inversion enabled. Figure \ref{img: uplink packet format} shows its
+An uplink message is sent from a Sender to a Gateway/Repeater or from a Repeater to a Gateway. It has a variable
+length and it is transmitted using up-chirps, i.e with IQ inversion disabled. Figure \ref{img: uplink packet format} shows its
 format.
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \begin{bytefield}[]{32}
         \bitheader{0,8,16} \\
@@ -337,10 +343,12 @@ format.
 
 
 \subsubsection{Downlink packet format}
-A downlink message is sent from the Gateway to a Sender, and can be optionally repeated by a Repeater. It has a fixed
+A downlink message is sent from a Gateway to a Sender/Repeater or from a Repeater to a Sender. It has a fixed
 length of 5 bytes and it is transmitted using down-chirps, i.e with IQ inversion enabled. Figure \ref{img: downlink
-packet format}, \ref{img: downlink timestamp packet format}, \ref{img: downlink commmand packet format} show its format.
+packet format}, \ref{img: downlink timestamp packet format}, \ref{img: downlink command packet format} show the
+general format, the timestamp format and the command format respectively.
 
+\vspace{1.6cm}
 \newcommand{\bitlabel}[2]{%
     \bitbox[]{#1}{%
         \raisebox{0pt}[4ex][0pt]{%
@@ -348,7 +356,7 @@ packet format}, \ref{img: downlink timestamp packet format}, \ref{img: downlink 
         }%
     }%
 }
-\begin{figure}
+\begin{figure}[h]
     \centering
     \begin{bytefield}[]{40}
         \bitlabel{8}{} & \bitlabel{1}{Message type} & \bitlabel{31}{}\\
@@ -360,25 +368,25 @@ packet format}, \ref{img: downlink timestamp packet format}, \ref{img: downlink 
     \label{img: downlink packet format}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \begin{bytefield}[]{40}
         \bitheader{0,8,9,39} \\
         \bitbox{8}{Sender ID} & \bitbox{1}{0}
                               & \bitbox{31}{Timestamp}
     \end{bytefield}
-    \caption{Downlunk timestamp packet format}
+    \caption{Downlink packet format of timestamps}
     \label{img: downlink timestamp packet format}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \begin{bytefield}[]{40}
-        \bitheader{0,8,9,39} \\
+        \bitheader{0,8,9,16,39} \\
         \bitbox{8}{Sender ID} & \bitbox{1}{1}
                               & \bitbox{7}{Opcode}
                               & \bitbox{24}{Padding}
     \end{bytefield}
-    \caption{Downlunk command packet format}
+    \caption{Downlink packet format for commands}
     \label{img: downlink command packet format}
 \end{figure}
