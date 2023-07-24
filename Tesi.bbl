@@ -193,5 +193,18 @@
     \field{journaltitle}{IEEE Transactions on Information Theory}
     \field{year}{1985}
   \endentry
+
+  \entry{lorawan_packets}{manual}{}
+    \list{organization}{1}{%
+      {Semtech}%
+    }
+    \field{labeltitlesource}{title}
+    \field{title}{In-Depth: Sending and Receiving Messages with LoRaWAN}
+    \verb{url}
+    \verb https://lora-developers.semtech.com/documentation/tech-papers-and-gui
+    \verb des/sending-and-receiving-messages-with-lorawan/sending-and-receiving
+    \verb -messages/#processing-the-downlink-packet
+    \endverb
+  \endentry
 \enddatalist
 \endinput

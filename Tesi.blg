@@ -2,7 +2,7 @@ This is BibTeX, Version 0.99d (TeX Live 2023/Arch Linux)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Tesi.aux
 The style file: biblatex.bst
-White space in argument---line 49 of file Tesi.aux
+White space in argument---line 51 of file Tesi.aux
  : \citation{CITAZIONE
  :                     PARAGRAFO REGOLAMENTAZIONE E CALCOLO MASSIMO NUMERO DI DEVICES}
 I'm skipping whatever remains of this command
@@ -26,45 +26,45 @@ Database file #2: refs.bib
 Biblatex version: 3.19
 Reallocated wiz_functions (elt_size=8) to 9000 items from 6000.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
-You've used 8 entries,
+You've used 9 entries,
             6399 wiz_defined-function locations,
-            1247 strings with 10539 characters,
-and the built_in function-call counts, 38578 in all, are:
-= -- 2831
-> -- 609
-< -- 207
-+ -- 1030
-- -- 233
-* -- 2366
-:= -- 3992
+            1250 strings with 10786 characters,
+and the built_in function-call counts, 40311 in all, are:
+= -- 2895
+> -- 617
+< -- 223
++ -- 1038
+- -- 239
+* -- 2419
+:= -- 4031
 add.period$ -- 0
-call.type$ -- 8
-change.case$ -- 122
+call.type$ -- 9
+change.case$ -- 132
 chr.to.int$ -- 54
-cite$ -- 14
-duplicate$ -- 4139
-empty$ -- 3607
-format.name$ -- 285
-if$ -- 8018
+cite$ -- 16
+duplicate$ -- 4372
+empty$ -- 3873
+format.name$ -- 286
+if$ -- 8426
 int.to.chr$ -- 0
-int.to.str$ -- 16
+int.to.str$ -- 18
 missing$ -- 0
-newline$ -- 197
-num.names$ -- 248
-pop$ -- 2435
+newline$ -- 210
+num.names$ -- 258
+pop$ -- 2756
 preamble$ -- 1
-purify$ -- 150
+purify$ -- 160
 quote$ -- 0
-skip$ -- 1192
+skip$ -- 1278
 stack$ -- 0
-substring$ -- 4855
-swap$ -- 865
-text.length$ -- 151
+substring$ -- 4905
+swap$ -- 933
+text.length$ -- 160
 text.prefix$ -- 0
 top$ -- 1
-type$ -- 255
+type$ -- 289
 warning$ -- 0
-while$ -- 507
+while$ -- 510
 width$ -- 0
-write$ -- 190
+write$ -- 202
 (There was 1 error message)

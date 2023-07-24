@@ -1,32 +1,38 @@
-\newglossaryentry{GSM}
-{
-    name=GSM,
-    description={Acronym for ``Global System for Mobile Communications", it's a 2nd generation mobile communication
-    standard, see \cite{gsm_book} for more information}
-}
-
-\newglossaryentry{LTE}
-{
-    name=LTE,
-    description={Acronym for ``Long Term Evolution", it's a 4th generation mobile communication standard, see \cite{lte_paper} for more information}
-}
-
-\newglossaryentry{FTP}
-{
-    name=FTP,
-    description={Acronym for ``File Transfer Protocol", built on top of TCP, see \cite{ftp_rfc} for more information}
-}
-
-\newglossaryentry{VHF}
-{
-    name=VHF,
-    description={Acronym for ``Very High Frequency", it refers to the radio frequency band between 30 and 300 MHz}
-}
-
-\newglossaryentry{PHY}
-{
-    name=PHY,
-    description={Stands for physical layer protcol}
-}
-
 \makeglossaries
+
+\setabbreviationstyle[acronym]{long-short}
+
+\newacronym[description={Global System for Mobile Communications, 2nd generation mobile communication
+standard, see \cite{gsm_book} for more information}]{GSM}{GSM}{global system for mobile communications}
+
+\newacronym[description={Long Term Evolution, 4th generation mobile communication standard, see \cite{lte_paper} for more information}]{LTE}{LTE}{long term evolution}
+
+\newacronym[description={File Transfer Protocol, built on top of TCP, see \cite{ftp_rfc} for more information}]{FTP}{FTP}{file transfer protocol}
+
+\newacronym[description={Very High Frequency, it refers to the radio frequency band between 30 and 300 MHz}]{VHF}{VHF}{very high frequency}
+
+\newacronym{PHY}{PHY}{physical layer protocol}
+
+\newacronym{LPWAN}{LPWAN}{low power wide area network}
+
+\newacronym[description={Internet of Things, it refers to the concept of a worldwide network of interconnected sensors}]{IoT}{IoT}{internet of things}
+
+\newacronym[description={LoRa Wide Area Network, it refers to an open network protocol built on top of LoRa}]{LoRaWAN}{LoRaWAN}{lora wide area network}
+
+\newacronym{CAD}{CAD}{channel activity detection}
+
+\newacronym{CSMA}{CSMA}{carrier sense multiple access}
+
+\newacronym{SYN}{SYN}{sync message}
+
+\newacronym{SYN/ACK}{SYN/ACK}{sync acknowledge message}
+
+\newacronym{ACK}{ACK}{acknowledge message}
+
+\newacronym{ACKACK}{ACKACK}{double acknowledge message}
+
+\newacronym{MCU}{MCU}{micro controller unit}
+
+\newacronym{IQ}{IQ}{in phase/quadrature}
+
+\glsaddall

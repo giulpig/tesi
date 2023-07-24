@@ -47,7 +47,7 @@
 \clearpage{\pagestyle{plain}\cleardoublepage}
 \input{abstract.tex}
 
-\printunsrtglossaries
+\printunsrtglossary[type=main]
 
 % Index
 \clearpage{\pagestyle{plain}\cleardoublepage}
@@ -56,9 +56,14 @@
 \clearpage{\pagestyle{plain}\cleardoublepage}
 \pagenumbering{arabic} %Arabic numerals for chapters
 
-\chapter{Introduction}
+\chapter*{Introduction}
 \label{chapter:introduction}
+\addcontentsline{toc}{chapter}{Introduction} \markboth{INTRODUCTION}{}
 \input{intro.tex}
+
+\chapter{Scenario And LoRaWAN Fundamentals}
+\label{chapter:cap1}
+\input{cap1_scenario_n_LoRaWAN.tex}
 
 %\chapter{Capabilities}
 %\label{chapter:capabilities}
@@ -68,7 +73,7 @@
 %\label{chapter:capabilities}
 %\input{capabilities.tex}
 
-\chapter{Bacco protocol}
+\chapter{Bacco Protocol}
 \label{chapter:protocol}
 \input{cap2_protocol.tex}
 
