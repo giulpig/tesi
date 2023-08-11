@@ -1,24 +1,22 @@
-The goal of this chapter is to give a description of the \textit{Bacco} protocol and to discuss the
+The goal of this chapter is to give a description of the Bacco protocol and to discuss the
 implementation choices that were made to deploy it. This is achieved using a top-down ordering for the level
 of detail, meaning that the overview is presented before the specifics.
 
-\section{Overview And Case Of Study}
-We will now start describing a simple scenario that makes use of the protocol to better understand the integration of
-Bacco into a \gls{LPWAN}. The network is built upon 4 categories of devices:
+\section{Overview}
+We will now start describing a simple scenario to better understand Bacco's operating principle. The network is
+built upon 4 categories of devices:
 
 \begin{description}[font=$\bullet$~\normalfont\scshape\color{blue!50!black}]
-    \item [Sender node] - collects data and sends it to the gateway;
-    \item [Repeater node] - listens to the incoming messages from Senders and forwards them to a Gateway; \footnote{The
-        use of Repeaters where physical obstacles compromise the integrity of the signals is of very high relevance in
+    \item [Sender node] - collects data and sends it to a Gateway or Repeater using LoRa;
+    \item [Repeater node] - listens to incoming LoRa messages from Senders and forwards them to a Gateway; \footnote{The
+            use of Repeaters where physical obstacles compromise the integrity of the signals is of very high relevance in
         agricultural contexts since natural barriers such as hills can easily block \gls{VHF} radio signals.}
-    \item [Gateway node] - collects data coming from the sender nodes and sends it to the web server. This node has
-        the role of coordinating and synchronizing Sender nodes. In the example
-        shown in Figure \ref{img: network stack}, this is achieved using \gls{FTP} over a
-        \gls{GSM} or \gls{LTE} mobile network. It can be optionally configured to perform
-        pre-processing operations (e.g. filtering, smoothing, interpolation ...) on the incoming data;
-    \item [Web server] - receives data coming from the Gateways, elaborates it, and makes it available
-        through a web application. Note that the scheme of communication involving this device is not covered by
-        Bacco.
+    \item [Gateway node] - collects data coming from Sender or Repeater nodes and sends it to the web server. In the example
+        shown in Figure \ref{img: network stack}, this is achieved using \gls{FTP} over a \gls{GSM} or \gls{LTE} mobile
+        network. This node has the role of coordinating and synchronizing Sender nodes. It can be optionally configured
+        to perform pre-processing operations (e.g. filtering, smoothing, interpolation ...) on the incoming data;
+    \item [Web server] - receives data coming from the Gateways, elaborates it, and makes it available to the user. Note
+        that the scheme of communication involving this device is not covered by Bacco.
 \end{description}
 
 \begin{figure}[ht]
@@ -48,9 +46,9 @@ It is crucial to identify each Sender node to contextualize the messages coming 
 This is achieved by assigning them a unique identifier, represented by a natural number in the range $\[1,254\]$.
 Address 0 is reserved for the Receiver and address 255 is used as a globally invalid address.
 This limits the number of Sender nodes connected to a single Gateway to 254 \footnote{This choice is influenced
-by the current Italian regulations \colorbox{red}{TODO: Scrivi e inserisci citazione a paragrafo su regolamentazione e
-calcolo numero massumo di devices} \cite{CITAZIONE PARAGRAFO REGOLAMENTAZIONE E CALCOLO MASSIMO NUMERO DI DEVICES}
-\cite{gazzetta_potenza_868} on duty cycle for the 868MHz band and the fact that most agricultural contexts do not
+    by the current Italian regulations \colorbox{red}{TODO: Scrivi e inserisci citazione a paragrafo su regolamentazione e
+    calcolo numero massumo di devices} \cite{CITAZIONE PARAGRAFO REGOLAMENTAZIONE E CALCOLO MASSIMO NUMERO DI DEVICES}
+    \cite{gazzetta_potenza_868} on duty cycle for the 868MHz band and the fact that most agricultural contexts do not
 require a huge amount of sensors}. If necessary, the network can scale up by using additional Gateways.
 Note that since Repeaters do not produce messages themselves nor they modify the forwarded ones, they will not be
 given an identifier.
@@ -79,36 +77,36 @@ Repeater to Sender). This implies that Sender nodes and Gateway nodes are not ab
 the same category (e.g. a Sender would not detect any transmission coming from a Sender).
 
 %\begin{figure}[ht]
-    %\centering
-    %\begin{subfigure}[b]{0.45\linewidth}
-        %\begin{subfigure}[b]{\linewidth}
-            %\begin{tikzpicture}
-                %\begin{axis}[width=\linewidth, height=4cm, title={\textbf{Up-chirp}}, xlabel={Time [ms]}, ylabel={Amplitude [V]}]
-                    %\addplot[color=red, samples=500][domain=0:1]{sin(x*x*5000)};
-                %\end{axis}
-            %\end{tikzpicture}
-        %\end{subfigure}
-        %\begin{subfigure}[b]{\linewidth}
-            %\begin{tikzpicture}
-                %\begin{axis}[width=\linewidth, height=4cm, title={\textbf{Down-chirp}}, xlabel={Time [ms]}, ylabel={Amplitude [V]}]
-                    %\addplot[color=blue, samples=500][domain=0:1]{sin(5000*(1-x)*(1-x))};
-                %\end{axis}
-            %\end{tikzpicture}
-        %\end{subfigure}
-    %\end{subfigure}
-    %\hspace{0.08\linewidth}
-    %\begin{subfigure}[b]{0.45\linewidth}
-        %\begin{tikzpicture}
-            %\begin{axis}[width=\linewidth, height=8cm + \baselineskip, title={\textbf{Frequency plot}}, xlabel={Time
-                %[ms]}, ylabel={Frequency [Hz]}, ytick={0, 0.5, 1}, yticklabels={$F_0-\frac{B}{2}$, $F_0$, $F_0+\frac{B}
-                %{2}$}, legend entries={Down-chirp, Up-chirp}]
-                %\addplot[line width=0.5mm, color=blue, samples=500][domain=0:1]{1-x};
-                %\addplot[line width=0.5mm, color=red, samples=500][domain=0:1]{x};
-            %\end{axis}
-        %\end{tikzpicture}
-    %\end{subfigure}
-    %\caption{IQ inversion.}
-    %\label{img: iq inversion}
+%\centering
+%\begin{subfigure}[b]{0.45\linewidth}
+%\begin{subfigure}[b]{\linewidth}
+%\begin{tikzpicture}
+%\begin{axis}[width=\linewidth, height=4cm, title={\textbf{Up-chirp}}, xlabel={Time [ms]}, ylabel={Amplitude [V]}]
+%\addplot[color=red, samples=500][domain=0:1]{sin(x*x*5000)};
+%\end{axis}
+%\end{tikzpicture}
+%\end{subfigure}
+%\begin{subfigure}[b]{\linewidth}
+%\begin{tikzpicture}
+%\begin{axis}[width=\linewidth, height=4cm, title={\textbf{Down-chirp}}, xlabel={Time [ms]}, ylabel={Amplitude [V]}]
+%\addplot[color=blue, samples=500][domain=0:1]{sin(5000*(1-x)*(1-x))};
+%\end{axis}
+%\end{tikzpicture}
+%\end{subfigure}
+%\end{subfigure}
+%\hspace{0.08\linewidth}
+%\begin{subfigure}[b]{0.45\linewidth}
+%\begin{tikzpicture}
+%\begin{axis}[width=\linewidth, height=8cm + \baselineskip, title={\textbf{Frequency plot}}, xlabel={Time
+%[ms]}, ylabel={Frequency [Hz]}, ytick={0, 0.5, 1}, yticklabels={$F_0-\frac{B}{2}$, $F_0$, $F_0+\frac{B}
+%{2}$}, legend entries={Down-chirp, Up-chirp}]
+%\addplot[line width=0.5mm, color=blue, samples=500][domain=0:1]{1-x};
+%\addplot[line width=0.5mm, color=red, samples=500][domain=0:1]{x};
+%\end{axis}
+%\end{tikzpicture}
+%\end{subfigure}
+%\caption{IQ inversion.}
+%\label{img: iq inversion}
 %\end{figure}
 
 \subsection{Subnetting}
@@ -117,8 +115,8 @@ SX1262\cite{sx1262} transceiver features a continuous frequency coverage from 15
 Bacco exploits this fact to build sub-networks that operate at different frequencies to achieve very low
 interference between them. The set of used frequencies is defined by Equation \ref{set of frequencies}.
 \begin{equation}[h]
-\label{set of frequencies}
-f = \left\{ f_k : f_k = 868\text{MHz} + k \times 125\text{KHz}, k\in \left\{0...10 \right\} \right\}
+    \label{set of frequencies}
+    f = \left\{ f_k : f_k = 868\text{MHz} + k \times 125\text{KHz}, k\in \left\{0...10 \right\} \right\}
 \end{equation}
 The main sub-network operates at the base frequency of 868.0 MHz, obtained by setting $k=0$ in Equation \ref{set of
 frequencies}; it is composed of the Gateway and all the
@@ -214,21 +212,21 @@ not yet have an allocated time frame and thus can not decide when to transmit ot
         \State rssi\_values $\gets$ $\[0,0,0,0,0,0,0,0,0,0\]$
 
         \While{all rssi\_values are equal to 0}
-            \For{$k$ from 0 to 10}
-                \State $f_k$ $\gets$ $868 \times 10^6 + k \times 125 * 10^3$
-                \For{$i$ from 0 to 10}
-                    \Do
-                        \State sleep for 1 s
-                        \State enter CAD mode at frequency $f_k$ for 1.5 s
-                    \doWhile{activity detected by CAD}
-                    \State send sensing message
-                    \State enter receive mode for 3 s
-                    \If{received SYN/ACK}
-                        \State $\text{rssi}\_values\[k\]$ $\gets$ current rssi
-                        \State \textbf{break}
-                    \EndIf
-                \EndFor
-            \EndFor
+        \For{$k$ from 0 to 10}
+        \State $f_k$ $\gets$ $868 \times 10^6 + k \times 125 * 10^3$
+        \For{$i$ from 0 to 10}
+        \Do
+        \State sleep for 1 s
+        \State enter CAD mode at frequency $f_k$ for 1.5 s
+        \doWhile{activity detected by CAD}
+        \State send sensing message
+        \State enter receive mode for 3 s
+        \If{received SYN/ACK}
+        \State $\text{rssi}\_values\[k\]$ $\gets$ current rssi
+        \State \textbf{break}
+        \EndIf
+        \EndFor
+        \EndFor
         \EndWhile
         \State \Return $868 \times 10^6 + \text{argmin(rssi\_values)} \times  125 * 10^3$
     \end{algorithmic}
@@ -358,7 +356,8 @@ than ensuring reliable delivery.
 In this section, the bit format of the messages is shown. The analysis will be split between uplink packets and downlink
 packets.
 
-\subsubsection{Uplink Packet Format}
+\subsection{Uplink Packet Format}
+\label{sec: uplink packet format}
 Uplink messages are sent from a Sender to a Gateway/Repeater or from a Repeater to a Gateway. It has a variable
 length and it is transmitted using up-chirps, i.e., with \gls{IQ} inversion disabled. The least significant byte
 contains the Sender's identifier represented as an 8-bit unsigned integer. The second least significant byte contains
@@ -378,7 +377,8 @@ length defined by the previous field. Figure \ref{img: uplink packet format} sho
 \end{figure}
 
 
-\subsubsection{Downlink Packet Format}
+\subsection{Downlink Packet Format}
+\label{sec: downlink packet format}
 Downlink messages are sent from a Gateway to a Sender/Repeater or from a Repeater to a Sender. It has a fixed
 length of 5 bytes and it is transmitted using down-chirps, i.e., with \gls{IQ} inversion enabled. The least significant
 byte contains the identifier of the Sender for which the message is directed as an 8-bit unsigned integer. The
@@ -432,17 +432,14 @@ general format, the timestamp format, and the command format respectively.
     \label{img: downlink command packet format}
 \end{figure}
 
-\subsubsection{Comparison with LoRaWAN}
-Comparing Bacco's packet format to LoRaWAN's (shown in Figure \ref{img: lorawan uplink format} and \ref{img: lorawan
-downlink format}, see \cite{lorawan_packets} for more information), we can make some observations:
-\begin{itemize}
-    \item Bacco uplink packets are smaller: the firsts have a fixed header size of 2 bytes, while LoRaWAN uses
-        at least 12 bytes for the same purpose;
-    \item Bacco downlink packets are smaller: the firsts have a fixed overall size of 5 bytes, while LoRaWAN uses
-        variable size packets that contain at least a 12 bytes header and can additionally contain a variable-sized payload;
-    \item Bacco has fewer parameters to configure so it is less configurable, but on the other hand it is easier to
-        implement.
-\end{itemize}
+\subsection{Comparing Bacco And LoRaWAN Packet Formats}
+We will now compare Bacco's packet format to LoRaWAN's. The latter is described thoroughly by Semtech's official
+documentation
+\cite{lorawan_packets}, from which a schematic reference was extracted and reported in
+Figure \ref{img: lorawan uplink format} and \ref{img: lorawan downlink format}.\\
+The focus of the comparison will be on the total size of
+the packets rather than the function of each individual field, in order to analyze the overhead associated to each
+protocol.
 
 \begin{figure}[ht]
     \centering
@@ -458,4 +455,22 @@ downlink format}, see \cite{lorawan_packets} for more information), we can make 
     \label{img: lorawan downlink format}
 \end{figure}
 
-% TODO: comparison with LoRaWAN
+\subsubsection{Uplink Packets}
+\label{subsec: bacco and lorawan uplink packet format}
+Considering two uplink packets containing the same payload and trasmitted with the two protocols under
+analysis, we can observe that Bacco uplink packets feature a fixed header size of 2 bytes as described in Section \ref{sec:
+uplink packet format}, while LoRaWAN uses a header size that varies between 12 and 28 bytes.\\
+To calculare these
+numbers we can consider an empty \textit{Frame Paylaod} and sum all the other
+fields' sizes to get the overall header size. We first consider the lower bound for each field to get a total of
+12 bytes (MAC Header: 1 + Frame Header: 7 + Frame Port: 0 + Message Integrity Code: 4) and the the upper bound
+to get a total of 28 bytes (MAC Header: 1 + Frame Header: 22 + Frame Port: 1 + Message Integrity Code: 4). This
+shows that Bacco uplink packets are always shorter at a fixed paylaod size.
+
+\subsubsection{Downlink Packets}
+Considering two uplink packets containing the same payload and trasmitted with the two protocols under
+analysis, we can observe that Bacco downlink packets feature a fixed overall size of 5 bytes as discussed in Section \ref{sec: downlink packet format}, while LoRaWAN uses
+packets that contain a header with a size between 12 and 28 bytes (the calculation is analogous to the one of the
+uplink case, discussed in Section \ref{subsec: bacco and lorawan uplink packet format}). This
+shows that Bacco downlink packets are always shorter at a fixed paylaod size.
+

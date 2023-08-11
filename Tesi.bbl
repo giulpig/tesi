@@ -126,6 +126,78 @@
     \field{year}{1985}
   \endentry
 
+  \entry{lorawan_agriculture_1}{inproceedings}{}
+    \name{author}{5}{}{%
+      {{hash=DD}{%
+         family={Davcev},
+         familyi={D\bibinitperiod},
+         given={Danco},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=MK}{%
+         family={Mitreski},
+         familyi={M\bibinitperiod},
+         given={Kosta},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=TS}{%
+         family={Trajkovic},
+         familyi={T\bibinitperiod},
+         given={Stefan},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=NV}{%
+         family={Nikolovski},
+         familyi={N\bibinitperiod},
+         given={Viktor},
+         giveni={V\bibinitperiod},
+      }}%
+      {{hash=KN}{%
+         family={Koteli},
+         familyi={K\bibinitperiod},
+         given={Nikola},
+         giveni={N\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{DDMKTS+1}
+    \strng{fullhash}{DDMKTSNVKN1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{booktitle}{2018 14th IEEE International Workshop on Factory Communication Systems (WFCS)}
+    \verb{doi}
+    \verb 10.1109/WFCS.2018.8402368
+    \endverb
+    \field{title}{IoT agriculture system based on LoRaWAN}
+    \field{year}{2018}
+  \endentry
+
+  \entry{lorawan_agriculture_2}{inproceedings}{}
+    \name{author}{2}{}{%
+      {{hash=BP}{%
+         family={Boonyopakorn},
+         familyi={B\bibinitperiod},
+         given={Pongsarun},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=TT}{%
+         family={Thongna},
+         familyi={T\bibinitperiod},
+         given={Thanamate},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BPTT1}
+    \strng{fullhash}{BPTT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{booktitle}{2020 - 5th International Conference on Information Technology (InCIT)}
+    \verb{doi}
+    \verb 10.1109/InCIT50588.2020.9310977
+    \endverb
+    \field{title}{Environment Monitoring System through LoRaWAN for Smart Agriculture}
+    \field{year}{2020}
+  \endentry
+
   \entry{gazzetta_potenza_868}{commentary}{}
     \field{labeltitlesource}{title}
     \field{title}{Elenco delle interfacce per gli apparati radioelettrici - Apparati a corto raggio utilizzati per applicazioni generiche (es. telemetria, telecomandi, allarmi e simili)}
@@ -150,8 +222,7 @@
     \field{title}{Channel Activity Detection: Ensuring Your LoRa Packets are sent}
     \verb{url}
     \verb https://lora-developers.semtech.com/documentation/tech-papers-and-gui
-    \verb des/channel-activity-detection-ensuring-your-lora-packets-are-sent/ho
-    \verb w-to-ensure-your-lora-packets-are-sent-properly/
+    \verb des/channel-activity-detection-ensuring-your-lora-packets-are-sent
     \endverb
   \endentry
 
@@ -202,8 +273,7 @@
     \field{title}{In-Depth: Sending and Receiving Messages with LoRaWAN}
     \verb{url}
     \verb https://lora-developers.semtech.com/documentation/tech-papers-and-gui
-    \verb des/sending-and-receiving-messages-with-lorawan/sending-and-receiving
-    \verb -messages/#processing-the-downlink-packet
+    \verb des/sending-and-receiving-messages-with-lorawan
     \endverb
   \endentry
 \enddatalist
