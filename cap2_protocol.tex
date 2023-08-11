@@ -3,14 +3,12 @@ implementation choices that were made to deploy it. This is achieved using a top
 of detail, meaning that the overview is presented before the specifics.
 
 \section{Overview}
-We will now start describing a simple scenario to better understand Bacco's operating principle. The network is
-built upon 4 categories of devices:
+We will now describe a simple network that makes use of Bacco to better understand its operating principle. The
+network is built upon 4 categories of devices:
 
 \begin{description}[font=$\bullet$~\normalfont\scshape\color{blue!50!black}]
-    \item [Sender node] - collects data and sends it to a Gateway or Repeater using LoRa;
-    \item [Repeater node] - listens to incoming LoRa messages from Senders and forwards them to a Gateway; \footnote{The
-            use of Repeaters where physical obstacles compromise the integrity of the signals is of very high relevance in
-        agricultural contexts since natural barriers such as hills can easily block \gls{VHF} radio signals.}
+    \item [Sender node] - collects data and sends it to a Gateway or Repeater using Bacco over LoRa modulation;
+    \item [Repeater node] - listens to incoming Bacco messages from Senders and forwards them to a Gateway;
     \item [Gateway node] - collects data coming from Sender or Repeater nodes and sends it to the web server. In the example
         shown in Figure \ref{img: network stack}, this is achieved using \gls{FTP} over a \gls{GSM} or \gls{LTE} mobile
         network. This node has the role of coordinating and synchronizing Sender nodes. It can be optionally configured
@@ -114,7 +112,7 @@ The LoRa protocol supports a wide range of carrier frequencies in the \gls{VHF} 
 SX1262\cite{sx1262} transceiver features a continuous frequency coverage from 150 MHz to 960 MHz}.\\
 Bacco exploits this fact to build sub-networks that operate at different frequencies to achieve very low
 interference between them. The set of used frequencies is defined by Equation \ref{set of frequencies}.
-\begin{equation}[h]
+\begin{equation}
     \label{set of frequencies}
     f = \left\{ f_k : f_k = 868\text{MHz} + k \times 125\text{KHz}, k\in \left\{0...10 \right\} \right\}
 \end{equation}
@@ -435,7 +433,7 @@ general format, the timestamp format, and the command format respectively.
 \subsection{Comparing Bacco And LoRaWAN Packet Formats}
 We will now compare Bacco's packet format to LoRaWAN's. The latter is described thoroughly by Semtech's official
 documentation
-\cite{lorawan_packets}, from which a schematic reference was extracted and reported in
+\cite{lorawan_packets}, a schematic reference can be found in
 Figure \ref{img: lorawan uplink format} and \ref{img: lorawan downlink format}.\\
 The focus of the comparison will be on the total size of
 the packets rather than the function of each individual field, in order to analyze the overhead associated to each
@@ -444,14 +442,14 @@ protocol.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1.0\textwidth, trim={0 0 0 125pt}, clip]{uml/lorawan_uplink_format.pdf}
-    \caption{LoRaWAN uplink packet format, courtesy of Semtech.}
+    \caption{LoRaWAN uplink packet format.}
     \label{img: lorawan uplink format}
 \end{figure}
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1.0\textwidth, trim={0 0 0 115pt}, clip]{uml/lorawan_downlink_format.pdf}
-    \caption{LoRaWAN downlink packet format, courtesy of Semtech.}
+    \caption{LoRaWAN downlink packet format.}
     \label{img: lorawan downlink format}
 \end{figure}
 

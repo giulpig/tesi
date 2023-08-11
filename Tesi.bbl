@@ -198,6 +198,66 @@
     \field{year}{2020}
   \endentry
 
+  \entry{lorawan_range_extender}{article}{}
+    \name{author}{7}{}{%
+      {{hash=SE}{%
+         family={Sisinni},
+         familyi={S\bibinitperiod},
+         given={Emiliano},
+         giveni={E\bibinitperiod},
+      }}%
+      {{hash=FP}{%
+         family={Ferrari},
+         familyi={F\bibinitperiod},
+         given={Paolo},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=FCD}{%
+         family={Fernandes\bibnamedelima Carvalho},
+         familyi={F\bibinitperiod\bibinitdelim C\bibinitperiod},
+         given={Dhiego},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=RS}{%
+         family={Rinaldi},
+         familyi={R\bibinitperiod},
+         given={Stefano},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=MP}{%
+         family={Marco},
+         familyi={M\bibinitperiod},
+         given={Pasetti},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=FA}{%
+         family={Flammini},
+         familyi={F\bibinitperiod},
+         given={Alessandra},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=DA}{%
+         family={Depari},
+         familyi={D\bibinitperiod},
+         given={Alessandro},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SEFPFCD+1}
+    \strng{fullhash}{SEFPFCDRSMPFADA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \verb{doi}
+    \verb 10.1109/TII.2019.2958620
+    \endverb
+    \field{number}{8}
+    \field{pages}{5607\bibrangedash 5616}
+    \field{title}{LoRaWAN Range Extender for Industrial IoT}
+    \field{volume}{16}
+    \field{journaltitle}{IEEE Transactions on Industrial Informatics}
+    \field{year}{2020}
+  \endentry
+
   \entry{gazzetta_potenza_868}{commentary}{}
     \field{labeltitlesource}{title}
     \field{title}{Elenco delle interfacce per gli apparati radioelettrici - Apparati a corto raggio utilizzati per applicazioni generiche (es. telemetria, telecomandi, allarmi e simili)}

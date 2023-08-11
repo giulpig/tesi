@@ -6,12 +6,13 @@
 %of physical devices in a diffused network; each device collects valuable and localized information that is used to
 %improve efficiency, productivity, and decision making.\\
 
-The goal of this chapter is to describe the intended use case scenario for Bacco and to provide a brief
-introduction to the \gls{LoRaWAN} protocol with a focus on the mentioned scenario.
+The goal of this chapter is to describe the the benefits and requirements for \gls{IoT} in agriculture and and to
+describe some existing well-knwown solutions. In particular, we will give a brief introduction to the \gls{LoRaWAN}
+protocol with a focus on some proposed use case scenarios.
 
-\section{IoT For Agriculture}
 
-\subsection{Benefits}
+\section{Benefits}
+\label{sec: benefits}
 The refinment of automation systems used in agriculture has been a costant interest throughout all history of
 industry due to the huge positive impact it has brought to society. If \gls{IoT} is introduced
 in agricultural contexts, it could bring lots of benefits:
@@ -33,7 +34,7 @@ in agricultural contexts, it could bring lots of benefits:
         and environmentally friendly agricultural practices;
 \end{itemize}
 
-\subsection{Requirements}
+\section{Requirements}
 Where \gls{IoT} is applied to agriculture, a set of unique and challenging requirements come into play:
 \begin{itemize}
     \item Power management: many remote agricultural locations lack a reliable power source. Devices need to be
@@ -77,7 +78,10 @@ the limited power budget. To achieve that, LoRaWAN defines 3 classes of devices 
 The classes are sorted by increasing energy demand, so class A stands out in agricultural
 contexts thanks to its superior power efficiency when compared to classes B and C. In this mode, a downlink message can
 only be sent in 2 time slots at pre-defined delays subsequently to the reception of an uplink message. Figure \ref{img:
-lorawan class a} shows a schematic version of the time slot management.
+lorawan class a} shows a schematic version of the time slot management.\\
+Due to the precise time slot management, the LoRaWAN standard does not support repeaters. Successful research has been
+done to overcome this limitation, see \cite{lorawan_range_extender}, however the additional required harware and the
+lack of official support from the standard makes it unconvenient to use.
 
 \begin{figure}[ht]
     \centering
@@ -86,18 +90,57 @@ lorawan class a} shows a schematic version of the time slot management.
     \label{img: lorawan class a}
 \end{figure}
 
-\section{Real Word Use Case: Small Vineyard}
-I will now describe a real world scenario in which \gls{IoT} can be integrated to 
+\section{Real Word Use Case Scenario}
+To better understand the limitations and the strenghts of LoRaWAN and Bacco, I will now describe 3 real world scenarios
+in which \gls{IoT} can be integrated to achive the benefits described in Section \ref{sec: benefits}. All of them
+require to collect physical data on a vineyard, however the locations and the surface areas are different for the 3
+cases. Here follows a brief description of each of them:
+
+\begin{enumerate}
+    \item A small vineyard with an area of 1 hectar \footnote{1 hectar is equivalent to $10^4~\mathrm{m^2}$} which is
+        located near an urban area and thus is fully covered by one or more hostpots registered on a public LoRaWAN
+        network. The surface of the terrain is almost flat;
+    \item A small vineyard with an area of 1 hectar which is located far from any urban area and thus is not fully
+        covered by any public hostpot. The surface of the terrain is almost flat;
+    \item A large vineyard with an area of 100 hectars which is located far from any urban area and thus is not covered
+        by any public hostpot. The vineyard is spread across multiple hills.
+\end{enumerate}
 
 \subsection{LoRaWAN Setup Using A Public Gateway}
-%TODO: point out unnecessary things that LoRaWAN does
-To build a functional network, it is sufficent
-
+We will now analyze an \gls{IoT} network that makes use of a public infrastructure such as
+\gls{TTN} or Helium. Each sender node can be easily registered on the platform and can transmit independently from the
+other devices.\\
+When trying to apply this solution to each of the described scenarios, we would observe the following behavior:
+\begin{enumerate}
+    \item Since the vineyard is covered by one or more public hotspots, it is possible to build the desired system.
+        Depending to the distance from the hotspot, the sender nodes may be required to transmit at a high power in
+        order for the signal to be detected by the hotspot. Any fault of nearby hotspots will result in an unusable and
+        not directly fixable system;
+    \item Since the vineyard is not fully covered by any public LoRaWAN network, it is not possible to build the desired
+        system;
+    \item Since the vineyard is not fully covered by any public LoRaWAN network, it is not possible to build the desired
+        system.
+\end{enumerate}
+This is the simplest and cheapest proposed solution to implement, as no additional hardware is needed other than the
+sender nodes, however it does not satisfy the requirements for 2 out of the 3 proposed scenarios.
 
 \subsection{LoRaWAN Setup Using An Owned Gateway}
-%TODO: point out unnecessary things that LoRaWAN does
+We will now analyze an \gls{IoT} network that makes use of owned/private LoRaWAN hotspots. Each
+sender node can be connected to it and can transmit independently from the other devices.\\
+When trying to apply this solution to each of the described scenarios, we would observe the following behavior:
+\begin{enumerate}
+    \item Since the vineyard is small and the underlying surface is mostly flat, the hotspot can fully cover it. The
+        system will satisfy the requirements;
+    \item Since the vineyard is small and the underlying surface is mostly flat, the hotspot can fully cover it. The
+        system will satisfy the requirements;
+    \item Since the vineyard is large and spread across multiple hills, it may not be possible for a single hotspot to
+        cover the entirety of it because of physical barriers, so multiple hotspots would be needed to satify the
+        requirements.
+\end{enumerate}
+The solution satisfies the requirements for all the scenarios, however in the $3^{rd}$ case it is necessary to use
+multiple gateways to achieve full coverage. This makes the system very expencive and difficult to deploy.
 
-\subsection{Proposed Bacco Setup}
-- What can be cut off?
-- Could an equivalent system exist with a lower cost and power consumption?
-
+\subsection{Bacco Setup}
+Bacco is described in this thesis as an alternative to the discussed existing solutions. It has the goal to satisfy all
+the requirements for the proposed scenarios and to provide a competitive system to LoRaWAN in the field of agriculture.
+The next chapters will describe its implementation details and compare its performance to LoRaWAN's.
