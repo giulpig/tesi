@@ -124,7 +124,7 @@ To be able to communicate with the Gateway, Repeaters need to forward the messag
 regardless of their operating frequency inside the sub-net.\\
 A network using Bacco can have up to 10 Repeaters operating at different frequencies, however, if more coverage
 is needed, it is possible to have multiple Repeater nodes working at the same frequency, given that they are not in
-reach with each other. This is very important because of bouncing, a phenomenon that occours when a message is sent
+reach with each other. This is very important because of bouncing, a phenomenon that occurs when a message is sent
 back and forth between Repeaters.\\
 Figure \ref{repeaters subnet} shows a network consisting of 3 different sub-networks, represented with different colors;
 the main one is in white, the blue one has a value of $k=2$, and the red one has a value of $k=1$.
@@ -139,17 +139,17 @@ the main one is in white, the blue one has a value of $k=2$, and the red one has
 
 
 \subsection{Distribution Of Transmission Activity}
-The Bacco protocol distributes radio activity over time with defined frames reserved for each Sender, using
-an approach that was first introduced by the AlohaNet \cite{alohanet} protocol. Frames are equally distributed between
-the maximum number of Senders that can be connected to a Gateway (i.e., $N_{max} = 254$), and the frame assignment is based on
-the identifier (e.g. Sender1 to slot 1, Sender2 to slot 2, etc.). A Sender can only transmit during its assigned frame,
-otherwise the Gateway will send a time-correction message. (see Subsection \ref{clock drift compensation} for a detailed
-explanation). The time delay between consecutive transmissions from the same Sender is a constant value and it is called
-$C$ (cycle time). Between each frame, a time equivalent to $\frac{1}{3}$ of a Sender frame is left as tolerance and is
-called radio silence frame. At the end of a cycle, a time equal to $\frac{C}{5}$ is reserved for the Gateway to upload
-the collected data. Figure \ref{timing diagram case 1} shows a schematic representation of the time management used by
-Bacco. The cycle time is a user-defined parameter, and all the other values are calculated based on it as shown in Table
-\ref{timing table}.\\
+The Bacco protocol distributes activity on the radio channel over time with defined frames reserved for each Sender,
+using an approach that was first introduced by the AlohaNet \cite{alohanet} protocol. Frames are equally distributed
+between the maximum number of Senders that can be connected to a Gateway (i.e., $N_{max} = 254$), and the frame
+assignment is based on the identifier (e.g. Sender1 to slot 1, Sender2 to slot 2, etc.). A Sender can only transmit
+during its assigned frame, otherwise, the Gateway will send a time-correction message. (see Subsection \ref{clock drift
+compensation} for a detailed explanation). The time delay between consecutive transmissions from the same Sender is a
+constant value and it is called $C$ (cycle time). Between each frame, a time equivalent to $\frac{1}{3}$ of a Sender
+frame is left as tolerance and is called a radio silence frame. At the end of a cycle, a time equal to $\frac{C}{5}$ is
+reserved for the Gateway to upload the collected data. Figure \ref{timing diagram case 1} shows a schematic
+representation of the time management used by Bacco. The cycle time is a user-defined parameter, and all the other
+values are calculated based on it as shown in Table \ref{timing table}.\\
 
 \begin{table}[ht]
     \caption{Time parameters calculation.}
@@ -435,9 +435,8 @@ We will now compare Bacco's packet format to LoRaWAN's. The latter is described 
 documentation
 \cite{lorawan_packets}, a schematic reference can be found in
 Figure \ref{img: lorawan uplink format} and \ref{img: lorawan downlink format}.\\
-The focus of the comparison will be on the total size of
-the packets rather than the function of each individual field, in order to analyze the overhead associated to each
-protocol.
+The focus of the comparison will be on the total size of the packets rather than the function of each field, to analyze
+the overhead associated with each protocol.
 
 \begin{figure}[ht]
     \centering
@@ -455,15 +454,15 @@ protocol.
 
 \subsubsection{Uplink Packets}
 \label{subsec: bacco and lorawan uplink packet format}
-Considering two uplink packets containing the same payload and trasmitted with the two protocols under
+Considering two uplink packets containing the same payload and transmitted with the two protocols under
 analysis, we can observe that Bacco uplink packets feature a fixed header size of 2 bytes as described in Section \ref{sec:
 uplink packet format}, while LoRaWAN uses a header size that varies between 12 and 28 bytes.\\
-To calculare these
-numbers we can consider an empty \textit{Frame Paylaod} and sum all the other
+To calculate these
+numbers we can consider an empty \textit{Frame Payload} and sum all the other
 fields' sizes to get the overall header size. We first consider the lower bound for each field to get a total of
-12 bytes (MAC Header: 1 + Frame Header: 7 + Frame Port: 0 + Message Integrity Code: 4) and the the upper bound
+12 bytes (MAC Header: 1 + Frame Header: 7 + Frame Port: 0 + Message Integrity Code: 4) and the upper bound
 to get a total of 28 bytes (MAC Header: 1 + Frame Header: 22 + Frame Port: 1 + Message Integrity Code: 4). This
-shows that Bacco uplink packets are always shorter at a fixed paylaod size.
+shows that Bacco uplink packets are always shorter at a fixed payload size.
 
 \subsubsection{Downlink Packets}
 Considering two uplink packets containing the same payload and trasmitted with the two protocols under
