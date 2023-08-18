@@ -6,9 +6,10 @@
 %of physical devices in a diffused network; each device collects valuable and localized information that is used to
 %improve efficiency, productivity, and decision making.\\
 
-The goal of this chapter is to describe the benefits and requirements for \gls{IoT} in agriculture and to
-present some existing well-known solutions. In particular, we will give a brief introduction to the \gls{LoRaWAN}
-protocol with a focus on some example use-case scenarios.
+The purpose of this chapter is to delineate the advantages and prerequisites of implementing \gls{IoT} in agriculture.
+Additionally, it aims to introduce Bacco: the protocol that constitutes the fundamental core of this thesis. Furthermore,
+we will introduce an alternative approach. Specifically, we will provide a concise overview of the \gls{LoRaWAN}
+protocol, emphasizing certain illustrative use-case scenarios.
 
 \section{Benefits}
 \label{sec: benefits}
@@ -17,13 +18,13 @@ protocol with a focus on some example use-case scenarios.
 If \gls{IoT} is integrated into agricultural contexts, it can bring lots of benefits to production:
 \begin{itemize}
     \item Precision farming: IoT devices enable farmers to collect real-time data on environmental variables. This data
-        helps optimize irrigation, fertilization, and pest control, leading to higher crop yields and reduced resource
+        helps to optimize irrigation, fertilization, and pest control, leading to higher crop yields and reduced resource
         waste;
     \item Decision making: the generated data provides farmers with insights into crop health, growth
         patterns, and yield predictions. This allows them to make informed decisions regarding planting, harvesting, and
         resource allocation, resulting in better outcomes;
     \item Remote monitoring and management: farmers can remotely monitor their fields through IoT devices,
-        reducing the need for constant physical presence. This is especially valuable for managing large or distant
+        reducing their physical presence. This is especially valuable for managing large or distant
         farms;
     \item Automation and labor savings: automation can handle tasks such as irrigation and pests
         treatments. This not only reduces labor costs but also frees up farmers to focus on more strategic aspects of
@@ -40,7 +41,7 @@ When integrating \gls{IoT} into agricultural contexts, a set of unique and chall
     \item Power management: many remote agricultural locations lack reliable power sources. Devices need to be
         designed with energy-efficient technology paired with high-energy batteries and/or alternative power sources
         like solar panels to ensure uninterrupted operation;
-    \item Connectivity and coverage: many agricultural areas lack reliable internet connectivity, which can hinder
+    \item Connectivity and coverage: many agricultural areas lack reliable Internet connectivity, which can hinder
         transmissions between IoT devices and central systems. Even when using alternative solutions such as
         \glspl{LPWAN} like LoRaWAN or Bacco, long distances and physical barriers are problems that need to be faced;
     \item Safety on system fails: human operation is not always convenient or even possible in
@@ -67,9 +68,9 @@ One of the most promising technologies in \gls{IoT} is \gls{LoRaWAN}, an open pr
 Semtech's LoRa modulation. It provides all the necessary software components to build a network
 that is reliable, power efficient and scalable, according to extensive research and testing. See
 \cite{lorawan_agriculture_1} and \cite{lorawan_agriculture_2} for reference.\\
-A LoRaWAN network consists of sender nodes and gateways. When a sender node broadcasts a LoRa transmission, it can be
+A LoRaWAN network consists of sender nodes and gateways. When a sender node broadcasts a LoRa packetpacket, it can be
 received by one or more gateways, that can store the information or forward it to a web server through the Internet.
-These kind of messages are called uplinks. Gateways might need to transmit data to the sender nodes, these kind of messages
+These kind of messages are called uplinks. Gateways might need to transmit data to the sender nodes and these kind of messages
 are called downlinks. Gateways can be self-owned with a custom configuration or can be part of an existing community
 such as \gls{TTN} or Helium.\\
 The gateway nodes are always listening to transmissions, so senders can uplink at any time. On the other hand, downlinks
@@ -92,10 +93,10 @@ appealing to production environments.
 \end{figure}
 
 \section{Real Word Use Case Scenario}
-To better understand the limitations and the strengths of LoRaWAN and Bacco, I will now describe 3 real-world scenarios
+To better understand the limitations and the strengths of LoRaWAN and Bacco, we will now describe 3 real-world scenarios
 in which \gls{IoT} can be integrated to achieve the benefits described in Section \ref{sec: benefits}. All of them
 require to collect data on a vineyard, however, the positions and the surface areas of the vineyards are
-different for the 3 cases. Here follows a brief description of each of them:
+different for the 3 cases. A brief description of each of them follows:
 \begin{enumerate}
     \item A small vineyard with an area of 1 hectare \footnote{1 hectare is equivalent to $10^4~\mathrm{m^2}$} which is
         fully covered by the signal of one or more hotspots registered on a public LoRaWAN
