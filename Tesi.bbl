@@ -258,22 +258,6 @@
     \field{year}{2020}
   \endentry
 
-  \entry{gazzetta_potenza_868}{commentary}{}
-    \field{labeltitlesource}{title}
-    \field{title}{Elenco delle interfacce per gli apparati radioelettrici - Apparati a corto raggio utilizzati per applicazioni generiche (es. telemetria, telecomandi, allarmi e simili)}
-    \verb{url}
-    \verb https://www.gazzettaufficiale.it/atto/serie_generale/caricaArticolo?a
-    \verb rt.versione=1&art.idGruppo=0&art.flagTipoArticolo=1&art.codiceRedazio
-    \verb nale=05A00705&art.idArticolo=1&art.idSottoArticolo=1&art.idSottoArtic
-    \verb olo1=10&art.dataPubblicazioneGazzetta=2005-02-12&art.progressivo=0
-    \endverb
-    \list{institution}{1}{%
-      {Ministero delle comunicazioni}%
-    }
-    \field{month}{02}
-    \field{year}{2005}
-  \endentry
-
   \entry{cad}{manual}{}
     \list{organization}{1}{%
       {Semtech}%
@@ -335,6 +319,22 @@
     \verb https://lora-developers.semtech.com/documentation/tech-papers-and-gui
     \verb des/sending-and-receiving-messages-with-lorawan
     \endverb
+  \endentry
+
+  \entry{gazzetta_potenza_868}{commentary}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Elenco delle interfacce per gli apparati radioelettrici - Apparati a corto raggio utilizzati per applicazioni generiche (es. telemetria, telecomandi, allarmi e simili)}
+    \verb{url}
+    \verb https://www.gazzettaufficiale.it/atto/serie_generale/caricaArticolo?a
+    \verb rt.versione=1&art.idGruppo=0&art.flagTipoArticolo=1&art.codiceRedazio
+    \verb nale=05A00705&art.idArticolo=1&art.idSottoArticolo=1&art.idSottoArtic
+    \verb olo1=10&art.dataPubblicazioneGazzetta=2005-02-12&art.progressivo=0
+    \endverb
+    \list{institution}{1}{%
+      {Ministero delle comunicazioni}%
+    }
+    \field{month}{02}
+    \field{year}{2005}
   \endentry
 \enddatalist
 \endinput

@@ -1808,7 +1808,6 @@ INPUT ./uml/network_topology.pdf
 INPUT uml/network_topology.pdf
 INPUT ./uml/network_topology.pdf
 INPUT ./uml/network_topology.pdf
-INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT ./uml/repeaters_subnet.pdf
 INPUT ./uml/repeaters_subnet.pdf
 INPUT uml/repeaters_subnet.pdf
@@ -1846,6 +1845,11 @@ INPUT ./uml/lorawan_downlink_format.pdf
 INPUT uml/lorawan_downlink_format.pdf
 INPUT ./uml/lorawan_downlink_format.pdf
 INPUT ./uml/lorawan_downlink_format.pdf
+INPUT ./images/uplink_packet_size.pdf
+INPUT ./images/uplink_packet_size.pdf
+INPUT images/uplink_packet_size.pdf
+INPUT ./images/uplink_packet_size.pdf
+INPUT ./images/uplink_packet_size.pdf
 INPUT ./cap3_performance.tex
 INPUT cap3_performance.tex
 INPUT ./cap3_performance.tex
@@ -1866,7 +1870,6 @@ INPUT ./Tesi.out
 INPUT ./Tesi.out
 INPUT Tesi.run.xml
 OUTPUT Tesi.run.xml
-INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb

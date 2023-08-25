@@ -15,6 +15,8 @@
 \glossaryentry{ACKACK?\glossentry{ACKACK}|setentrycounter[]{page}"\glsnumberformat}{1}
 \glossaryentry{MCU?\glossentry{MCU}|setentrycounter[]{page}"\glsnumberformat}{1}
 \glossaryentry{IQ?\glossentry{IQ}|setentrycounter[]{page}"\glsnumberformat}{1}
+\glossaryentry{ToA?\glossentry{ToA}|setentrycounter[]{page}"\glsnumberformat}{1}
+\glossaryentry{ERP?\glossentry{ERP}|setentrycounter[]{page}"\glsnumberformat}{1}
 \glossaryentry{IoT?\glossentry{IoT}|setentrycounter[]{page}"\glsnumberformat}{3}
 \glossaryentry{LoRaWAN?\glossentry{LoRaWAN}|setentrycounter[]{page}"\glsnumberformat}{3}
 \glossaryentry{IoT?\glossentry{IoT}|setentrycounter[]{page}"\glsnumberformat}{3}
@@ -37,7 +39,7 @@
 \glossaryentry{CAD?\glossentry{CAD}|setentrycounter[]{page}"\glsnumberformat}{11}
 \glossaryentry{IQ?\glossentry{IQ}|setentrycounter[]{page}"\glsnumberformat}{11}
 \glossaryentry{IQ?\glossentry{IQ}|setentrycounter[]{page}"\glsnumberformat}{11}
-\glossaryentry{IQ?\glossentry{IQ}|setentrycounter[]{page}"\glsnumberformat}{12}
+\glossaryentry{IQ?\glossentry{IQ}|setentrycounter[]{page}"\glsnumberformat}{11}
 \glossaryentry{VHF?\glossentry{VHF}|setentrycounter[]{page}"\glsnumberformat}{12}
 \glossaryentry{SYN/ACK?\glossentry{SYN/ACK}|setentrycounter[]{page}"\glsnumberformat}{15}
 \glossaryentry{CAD?\glossentry{CAD}|setentrycounter[]{page}"\glsnumberformat}{15}
@@ -49,3 +51,12 @@
 \glossaryentry{SYN/ACK?\glossentry{SYN/ACK}|setentrycounter[]{page}"\glsnumberformat}{16}
 \glossaryentry{IQ?\glossentry{IQ}|setentrycounter[]{page}"\glsnumberformat}{18}
 \glossaryentry{IQ?\glossentry{IQ}|setentrycounter[]{page}"\glsnumberformat}{19}
+\glossaryentry{ToA?\glossentry{ToA}|setentrycounter[]{page}"\glsnumberformat}{23}
+\glossaryentry{ToA?\glossentry{ToA}|setentrycounter[]{page}"\glsnumberformat}{23}
+\glossaryentry{ToA?\glossentry{ToA}|setentrycounter[]{page}"\glsnumberformat}{23}
+\glossaryentry{ToA?\glossentry{ToA}|setentrycounter[]{page}"\glsnumberformat}{23}
+\glossaryentry{ERP?\glossentry{ERP}|setentrycounter[]{page}"\glsnumberformat}{23}
+\glossaryentry{ToA?\glossentry{ToA}|setentrycounter[]{page}"\glsnumberformat}{24}
+\glossaryentry{ERP?\glossentry{ERP}|setentrycounter[]{page}"\glsnumberformat}{24}
+\glossaryentry{ERP?\glossentry{ERP}|setentrycounter[]{page}"\glsnumberformat}{24}
+\glossaryentry{ERP?\glossentry{ERP}|setentrycounter[]{page}"\glsnumberformat}{24}

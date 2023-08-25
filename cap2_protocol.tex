@@ -44,10 +44,7 @@ It is crucial to identify each Sender node to contextualize the messages coming 
 This is achieved by assigning them a unique identifier, represented by a natural number in the range $\[1,254\]$.
 Address 0 is reserved for the Receiver and address 255 is used as a globally invalid address.
 This limits the number of Sender nodes connected to a single Gateway to 254 \footnote{This choice is influenced
-    by the current Italian regulations \colorbox{red}{TODO: Scrivi e inserisci citazione a paragrafo su regolamentazione e
-    calcolo numero massumo di devices} \cite{CITAZIONE PARAGRAFO REGOLAMENTAZIONE E CALCOLO MASSIMO NUMERO DI DEVICES}
-    \cite{gazzetta_potenza_868} on duty cycle for the 868MHz band and the fact that most agricultural contexts do not
-require a huge amount of sensors}. If necessary, the network can scale up by using additional Gateways.
+    by the considerations presented in Section \ref{subsec: regulations}}. If necessary, the network can scale up by using additional Gateways.
 Note that since Repeaters do not produce messages themselves nor they modify the forwarded ones, they will not be
 given an identifier.
 
@@ -346,8 +343,8 @@ TX adaption parameters}:
         \hline
     \end{tabular}
 \end{table}
-Gateways and Repeaters always operate at $P_{0}$, since power efficiency for sending a message is less critical
-than ensuring reliable delivery.
+Gateways and Repeaters always operate at $P_{0}$, since power efficiency is less critical than ensuring the highest
+possible delivery rate.
 
 
 \section{Packet Format}
@@ -456,18 +453,25 @@ the overhead associated with each protocol.
 \label{subsec: bacco and lorawan uplink packet format}
 Considering two uplink packets containing the same payload and transmitted with the two protocols under
 analysis, we can observe that Bacco uplink packets feature a fixed header size of 2 bytes as described in Section \ref{sec:
-uplink packet format}, while LoRaWAN uses a header size that varies between 12 and 28 bytes.\\
-To calculate these
-numbers we can consider an empty \textit{Frame Payload} and sum all the other
-fields' sizes to get the overall header size. We first consider the lower bound for each field to get a total of
-12 bytes (MAC Header: 1 + Frame Header: 7 + Frame Port: 0 + Message Integrity Code: 4) and the upper bound
-to get a total of 28 bytes (MAC Header: 1 + Frame Header: 22 + Frame Port: 1 + Message Integrity Code: 4). This
-shows that Bacco uplink packets are always shorter at a fixed payload size.
+uplink packet format}, while LoRaWAN uses a MAC header size that varies between 7 and 23 bytes.\\
+To show that, we can consider an empty \textit{Frame Payload} and sum all the other
+fields' sizes to get the overall header size. LoRaWAN supports a range of sizes for the uplink packets; the lower bound
+is given by Frame Header: 7 + Frame Port: 0; the upper bound is given by Frame Header: 22 + Frame Port: 1. This means
+that, at a fixed payload size, Bacco uplink packets are always shorter by a constant factor between 5 and 21 bytes.
+Figure \ref{img: uplink packet size} shows a plot of the total size of an uplink packet compared to its payload lenght,
+using both Bacco and LoRaWAN.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/uplink_packet_size.pdf}
+    \caption{LoRa and Bacco total packet size with respect to payload size}
+    \label{img: uplink packet size}
+\end{figure}
+
 
 \subsubsection{Downlink Packets}
-Considering two uplink packets containing the same payload and trasmitted with the two protocols under
-analysis, we can observe that Bacco downlink packets feature a fixed overall size of 5 bytes as discussed in Section \ref{sec: downlink packet format}, while LoRaWAN uses
-packets that contain a header with a size between 12 and 28 bytes (the calculation is analogous to the one of the
-uplink case, discussed in Section \ref{subsec: bacco and lorawan uplink packet format}). This
-shows that Bacco downlink packets are always shorter at a fixed paylaod size.
-
+Considering two uplink packets containing the same payload, but trasmitted using the two protocols under analysis, we
+can observe that Bacco downlink packets feature a fixed overall size of 5 bytes as discussed in Section \ref{sec:
+downlink packet format}, while LoRaWAN uses packets with a header of size between 7 and 23 bytes (the
+calculation is analogous to the one of the uplink case, discussed in Section \ref{subsec: bacco and lorawan uplink
+packet format}).
