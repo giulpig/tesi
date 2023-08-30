@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex Tesi"] 1693397827 "Tesi.aux" "Tesi.bbl" "Tesi" 1693398169 0
-  "./Tesi-blx.bib" 1693398168 343 27af2fa4d0370999ebe8f3266686c889 ""
+["bibtex Tesi"] 1693404890 "Tesi.aux" "Tesi.bbl" "Tesi" 1693406405 0
+  "./Tesi-blx.bib" 1693406404 343 27af2fa4d0370999ebe8f3266686c889 ""
   "./refs.bib" 1693387148 3786 9c29b8ddc0a6f68bbf02b5cb1ab5ae2f ""
   "/usr/share/texmf-dist/bibtex/bst/biblatex/biblatex.bst" 1689853683 65484 b7949c47a88ed6dca66ebc7a04577312 ""
-  "Tesi.aux" 1693398168 16803 7bb512e2f7a123d02778d5fb072f627f "pdflatex"
+  "Tesi.aux" 1693406404 17128 2dea23052f8ff298e1497e341850a5ba "pdflatex"
   (generated)
   "Tesi.bbl"
   "Tesi.blg"
   (rewritten before read)
-["pdflatex"] 1693398163 "Tesi.tex" "Tesi.pdf" "Tesi" 1693398169 0
+["pdflatex"] 1693406399 "Tesi.tex" "Tesi.pdf" "Tesi" 1693406405 0
   "/home/giulpig/.texlive/texmf-var/web2c/pdftex/pdflatex.fmt" 1686379569 8204104 ecbe64881e25dab712ea2114cfae6e87 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1689853683 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1689853683 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -324,18 +324,18 @@
   "/usr/share/texmf-dist/tex/latex/xkeyval/xkeyval.sty" 1689853683 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1689853683 40684 9b9ec0b4288972636ff6a3b9c4238efc ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1692954917 4500887 78c3c8978f2ef341899ba3735aeaaafc ""
-  "Tesi.aux" 1693398168 16803 7bb512e2f7a123d02778d5fb072f627f "pdflatex"
-  "Tesi.bbl" 1693397827 9933 977c57613c02b8cc436ce660c0febbb7 "bibtex Tesi"
-  "Tesi.glo" 1693398168 6503 59c483167488862b936324d719ebb8ec "pdflatex"
-  "Tesi.out" 1693398168 5668 841742bfca87fa5727fd236bc6cdfa4d "pdflatex"
-  "Tesi.run.xml" 1693398168 2613 72e740f269c9a7b5f164e95989c8242d "pdflatex"
+  "Tesi.aux" 1693406404 17128 2dea23052f8ff298e1497e341850a5ba "pdflatex"
+  "Tesi.bbl" 1693404890 9933 977c57613c02b8cc436ce660c0febbb7 "bibtex Tesi"
+  "Tesi.glo" 1693406404 6833 9780a59d9c0de386926e91ac7d52e4fe "pdflatex"
+  "Tesi.out" 1693406404 5673 2f02c2e0e1e6af8386a0fd01a416e39e "pdflatex"
+  "Tesi.run.xml" 1693406404 2613 72e740f269c9a7b5f164e95989c8242d "pdflatex"
   "Tesi.tex" 1691769916 2960 48a64ccce72ca865d959604b948427d2 ""
-  "Tesi.toc" 1693398168 3239 6d853a0b56ef70fbd6fe3cd1e4b1e064 "pdflatex"
+  "Tesi.toc" 1693406404 3240 c7dcd82ba3ead9986e5faf8437909147 "pdflatex"
   "abstract.tex" 1689110859 2953 5afd46d0eb25edb972b0b8b46006cf39 ""
   "cap1_scenario_n_LoRaWAN.tex" 1693214848 11198 fb853f5a41d422734ee39eca4622c10e ""
   "cap2_protocol.tex" 1693330905 25299 d0966cc98040d938fb65cfaa3c057b9b ""
-  "cap3_performance.tex" 1693398163 13790 7aa2562037194155d4340572cbad46dc ""
-  "glossary.tex" 1693330889 1832 0ac764bad7003d4345b8a32573bc1c87 ""
+  "cap3_performance.tex" 1693406401 15213 1353d141d117087cec1c2e9c9cc910c1 ""
+  "glossary.tex" 1693404699 1752 4b57c00c09236e687861f997bc719ff3 ""
   "images/bacco_SF7_14dbm_125khz_power.pdf" 1689781605 186613 b9f1eede857bdad31753440db45510c6 ""
   "images/logo_dei.png" 1686379301 204932 2924d261b9bbe8afce30882bbae6551f ""
   "images/logo_unipd.png" 1686379301 796357 a7729989c997a5de187beeaa00bd7a32 ""
