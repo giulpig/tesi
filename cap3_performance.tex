@@ -9,48 +9,38 @@ results in improved energy efficiency and smaller probability of interference wi
 devices.\\
 \Gls{ToA} is correlated to the packet lenght in symbols (a longer packet will require a longer trasmission time).
 Referencing the official LoRa documentation, see \cite{sx1262}, we can find that \gls{ToA} is
-discussed in section 6.1.4; in particular the exact formula is shown here by Equation \ref{eqn: ToA}.
+discussed in section 6.1.4; in particular the exact formula for \gls{ToA} is shown here by Equation \ref{eqn: ToA}.
 \begin{equation}
     \label{eqn: ToA}
     \mathit{ToA} = \frac{2^{\mathit{SF}}}{\mathit{BW}}*\mathit{N_{symbols}}
 \end{equation}
-
 where
 \begin{itemize}[noitemsep,nolistsep]
     \item[\boldmath$\cdot$] $\mathit{SF}$ is the Spreading Factor (from 5 to 12);
     \item[\boldmath$\cdot$] $\mathit{BW}$ is the Bandwidth (in kHz);
     \item[\boldmath$\cdot$] $\mathit{N_{symbols}}$ is the number of symbols in the packet.
 \end{itemize}
-\\
-$\mathit{N_{symbols}}$ can be calculated knowing the bytes of the packet ($\mathit{N_{bytes_{payload}}}$) using Equation \ref{eqn: n_symbols SF5_6} for $\mathit{SF} \in \left
-\{5, 6 \right\} $ and Equation \ref{eqn: n_symbols SF7_12} for $\mathit{SF} \in \left
-\[7, 12 \right\] $
+\vspace{0.55cm}
+$\mathit{N_{symbols}}$ can be calculated knowing the number of bytes that compose the packet ($\mathit{N_{bytes_{payload}}}
+$) by using Equation \ref{eqn: n_symbols}.
 
 \begin{equation}
-    \label{eqn: n_symbols SF5_6}
+    \label{eqn: n_symbols}
     \resizebox{.9\hsize}{!}{
-    \mathit{N_{symbols}} = \mathit{N_{symbols_{preamble}}} + 6.25 + 8 + \textit{ceil} \left( \frac{\textit{max} \left( 8 *
-        \mathit{N_{bytes_{payload}}} + \mathit{N_{bits_{CRC}}} - 4 * \mathit{SF} + \mathit{N_{symbols_{header}}},
-0 \right) }{\mathit{SF} * \mathit{CR}} \right)}
-\end{equation}
-
-\begin{equation}
-    \label{eqn: n_symbols SF7_12}
-    \resizebox{.9\hsize}{!}{
-    \mathit{N_{symbols}} = \mathit{N_{symbols_{preamble}}} + 4.25 + 8 + \textit{ceil} \left( \frac{\textit{max} \left( 8 *
-        \mathit{N_{bytes_{payload}}} + \mathit{N_{bits_{CRC}}} - 4 * \mathit{SF} + 8 + \mathit{N_{symbols_{header}}},
-0 \right) }{\mathit{SF} * \mathit{CR}} \right)}
+        \ensuremath{
+            \mathit{N_{symbols}} = \mathit{N_{symbols_{preamble}}} + 12.25 + \textit{max} \left( \textit{ceil} \left(
+                    \frac{8 * \mathit{N_{bytes_{MAC}}} - 4 * \mathit{SF} + 24 + 20 * H}{4 * \mathit{SF}} \right), 0 \right) * \frac{4}{\mathit{CR}}}}
 \end{equation}
 
 where
 \begin{itemize}[noitemsep,nolistsep]
-    \item[\boldmath$\cdot$] $\mathit{N_{bits_{CRC}}}$ is number of bits used for \gls{CRC} and can assume a value of
-        either 0 or 16;
-    \item[\boldmath$\cdot$] $\mathit{N_{symbols_{header}}}$ is the number of symbols in the packet header.
-        Since each symbol encodes $\mathit{SF}$ bits, $\mathit{N_{symbols_{header}}} = \frac{\mathit{N_{bits_{header}}}}
-        {\mathit{SF}}$;
-    \item[\boldmath$\cdot$] $\mathit{CR}$ is the coding rate and can assume a value of either $\frac{4}{5},\frac{4}{6},
+    \item[\boldmath$\cdot$] $\mathit{N_{symbols_{preamble}}}$ is equal to the number of symbols in the preamble sync message.
+        This parameter can be set arbitrarily, but it is often given the value of 8.
+    \item[\boldmath$\cdot$] $H$ denotes the presence of an explicit physical layer header. It assumes the
+        value of 1 when the header is present and 0 when it is not present;
+    \item[\boldmath$\cdot$] $\mathit{CR}$ is equal to the coding rate. It can be set to $\frac{4}{5},\frac{4}{6},
         \frac{4}{7}$ or $\frac{4}{8}$.
+    \item[\boldmath$\cdot$] $\mathit{N_{bytes_{MAC}}}$ is equal to the total number of bytes of the \gls{MAC} packet.
 \end{itemize}
 \vspace{0.55cm}
 The duty cycle is the fraction of time in which the channel is busy, it can be calculated using Equation \ref{eqn: duty cycle}.
@@ -64,7 +54,7 @@ where
     \item[\boldmath$\cdot$] $\tau$ is the \gls{ToA};
     \item[\boldmath$\cdot$] $T$ is the transmission period.
 \end{itemize}
-\\
+
 
 \subsection{Regulations}
 \label{subsec: regulations}
@@ -103,29 +93,119 @@ where
     \item[\boldmath$\cdot$] $\mathit{d_{max}}$ is the maximum duty cycle, it has to be smaller or equal to 1 and can be
         set accordingly to the local regulations or the specific needs.
 \end{itemize}
-\\
 
-\subsubsection{Example Of Calculation}
-To demonstrate the use of the Equation \ref{eqn: max devices}, we will now consider a network with the following
-properties:
+\subsection{Duty Cycle Calculation}
+To demonstrate the use of the Equation \ref{eqn: duty cycle} to calculate the duty cycle, we will now consider a network
+with the following properties:
 \begin{itemize}
-    \item each Sender node has a transmission period of $T = 1 \textit{ hour} = 3600\ s$;
-    \item each Sender node transmits a packet with a payload that has a lenght in bytes equal to $\mathit{N_{bytes_{payload}}} = 16$;
-    \item the network operates at a frequency of 868.0 Mhz on the Italian territory, and thus has to respect the limit
-        of $\mathit{d_{max}} = 1\% = 0.01$.
+    \item the electromagnetic interference is neglectable and each packet gets delivered with an error rate of 0;
+    \item each Sender node has a transmission period of $T = 10\ \mathrm{ min} = 360\ \mathrm{s}$;
+    \item each Sender node transmits a packet with a payload that has a lenght in bytes equal to
+        $\mathit{N_{bytes_{MAC\_payload}}} = 15$;
+    \item the devices in the network operate at a frequency of 868.0 Mhz on the Italian territory, and thus has to
+        respect the duty cycle limit of $\mathit{d_{max}} = 1\% = 0.01$;
+    \item the devices in the network operate at a spreding factor equal to $\mathit{SF} = 7$;
+    \item the devices in the network operate at a bandwidth equal to $\mathit{BW} = 125\ \mathrm{kHz}$;
+    \item all the packets feature a coding rate equal to $\mathit{CR} = \frac{4}{5}$;
+    \item all the packets are transmitted with a preamble lenght equal to $\mathit{N_{symbols_{preamble}}} = 8$.
 \end{itemize}
 
-
 \subsubsection{Bacco}
-a downlink is sent every 10 packets;
+As discussed in Section \ref{sec: packet format}, the overhead associated to each \gls{MAC} packet in uplink mode is
+equal to $\mathit{N_{bytes_{MAC\_header\_uplink}}} = 2$, so the total \gls{MAC} packet lenght is equal to
+$$\mathit{N_{bytes_{uplink}}} = \mathit{N_{bytes_{MAC\_header\_uplink}}} + \mathit{N_{bytes_{MAC\_payload}}} = 2 + 15 =
+17\ \mathrm{bytes}$$
+Now, using Equation \ref{eqn: n_symbols} we can calculate the total number of symbols used to encode an uplink packet
+\begin{equation*}
+    \resizebox{.9\hsize}{!}{
+        \ensuremath{mathit{N_{symbols_{uplink}}} = 8 + 12.25 + \textit{max} \left ( \textit{ceil} \left ( \frac{8 * 17 - 4 * 7 + 24 +
+        20 * 1}{4 * 7} \right ), 0 \right ) * \frac{4}{4/5} = 50.25\ \mathrm{symbols}}
+    }
+\end{equation*}
+Now, using Equation \ref{eqn: ToA} we can calculate the \gls{ToA} of an uplink packet
+$$\mathit{ToA_{uplink}} = \frac{2^7}{125000} * 50.25 = 51.456\ \mathrm{ms}$$
+As discussed in Section \ref{sec: packet format}, the overall size of a downlink packet it equal to
+$\mathit{N_{bytes_{dowlink}}} = 5\ \mathrm{bytes}$
+Now, using Equation \ref{eqn: n_symbols} we can calculate the total number of symbols used to encode a downlink packet
+\begin{equation*}
+    \resizebox{.9\hsize}{!}{
+        \ensuremath{
+        \mathit{N_{symbols_{uplink}}} = 8 + 12.25 + \textit{max} \left ( \textit{ceil} \left ( \frac{8 * 5 - 4 * 7 +
+    24}{4 * 7} \right ), 0 \right ) * \frac{4}{4/5} = 30.25\ \mathrm{symbols}}
+    }
+\end{equation*}
+Now, using Equation \ref{eqn: ToA} we can calculate the \gls{ToA} of a downlink packet
+$$\mathit{ToA_{downlink}} = \frac{2^7}{125000} * 30.25 = 30.976\ \mathrm{ms}$$
+Since the packet error rate is equal to 0, only one downlink message is sent every 10 uplink messages as discussed in
+\ref{clock drift compensation}, so the average \gls{ToA} per period is equal to
+$$\mathit{ToA_{avg}} = \mathit{ToA_{uplink}} + \mathit{ToA_{downlink}} * \frac{1}{10} = 54.5536\ \mathrm{ms}$$
+Now, using Equation \ref{eqn: max devices} we can calculate the maximum number of devices that can be connected to the
+network
+$$\mathit{N_{devices_{max}}} = \textit{floor} \left( \frac{0.01 * 360}{54.5536 * 10^{-3}} \right) = 65$$
 
 \subsubsection{LoRaWAN}
-a downlink is sent every packet (confirmation);
-
+As discussed in Section \ref{sec: lorawan uplink packet format}, both LoRaWAN uplink and downlink packets have a
+\gls{MAC}
+header that is greater or equal to $\mathit{N_{bytes_{MAC\_header\_uplink}}} = \mathit{N_{bytes_{MAC\_header\_downlink}}}
+= 12\ \mathrm{bytes}$. We will suppose that that's the header size never exceeds that value, thus the total size of the
+uplink and downlink packets are
+$$\mathit{N_{bytes_{uplink}}} = \mathit{N_{bytes_{MAC\_header\_uplink}}} + \mathit{N_{bytes_{MAC\_payload}}} = 13 + 15 =
+28\ \mathrm{bytes}$$
+$$\mathit{N_{bytes_{downlink}}} = \mathit{N_{bytes_{MAC\_header\_downlink}}} = 13\ \mathrm{bytes}$$
+Now, using Equation \ref{eqn: n_symbols} and \ref{eqn: ToA} we can calculate the total \gls{ToA} per period
+$$\mathit{ToA_{uplink}} = 66.816\ \mathrm{ms}$$
+$$\mathit{ToA_{downlink}} = 46.336\ \mathrm{ms} $$
+Since a downlink packet is sent as an \gls{ACK} for every uplink, the average \gls{ToA} per period is equal to
+$$\mathit{ToA_{avg}} = \mathit{ToA_{uplink}} + \mathit{ToA_{downlink}} = 448.816\ \mathrm{ms} $$
+Now, using Equation \ref{eqn: max devices} we can calculate the maximum number of devices that can be connected to the
+network
+$$\mathit{N_{devices_{max}}} = \textit{floor} \left( \frac{0.01 * 360}{448.816 * 10^{-3}} \right) = 8$$
 
 \section{Laboratory Tests}
+This section will present laboratory tests concerning the performance of devices running Bacco. Specifically, the
+emphasis will be on power draw and packet error rate. The obtained results will be compared to those obtained using
+LoRaWAN.
 
-\subsection{Single Packet Energy}
+\subsection{Transmission Power Draw}
+This section will present a test that aims to measure the power draw over time during the transmission of a packet.
+Here follows a list of the conditions in which the experiment was conducted:
+\begin{itemize}
+    \item \textbf{Transmitter device}: Heltec AB01 MCU, equipped with ARM Cortex M0+ Core and Semtech SX1262 LoRa module,
+        see \cite{ab01}
+    \item \textbf{Measuring device}: Keysight DSOX1204G digital oscilloscope.
+    \item \textbf{Power source}: 3.3V stabilized voltage source.
+    \item \textbf{Measuring circuit}: 1.18 ohm shunt resistor connected in series to the voltage source
+        and in parallel to the oscilloscope probes, see Figure \ref{img: measure setup}.
+    \item \textbf{LoRa configuration}: uplink mode, MAC payload with size of 15 bytes, spreding factor set to 7, ouput power
+        set to 14 dBm, bandwidth set to 125 kHz.
+\end{itemize}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/schematic.png}\\
+    \caption{Electrical diagram of the measuring setup for power draw testing}
+    \label{img: measure setup}
+\end{figure}
+The tests have been conducted by transmitting a single packet multiple times at identical conditions. It has been observed
+that the experiment yielded exceptionally consistent results across the different transmissions. The procedure was
+applied to Bacco packets and LoRaWAN packets. By analyzing the data logs collected by the oscilloscope reported in
+Figure \ref{img: packet}, it is possible to measure the \gls{ToA}, equivalent to the period of time in which the board
+consumed a power greater than 350 mA, and the transmission energy, equivalent to the discrete integral of the power draw
+over the \gls{ToA} period. The numerical results are shown in Table \ref{tab: results}.
+
+\begin{table}[ht]
+    \caption{Single packet transmission numerical results.}
+    \label{tab: results}
+    \centering
+    \setlength{\extrarowheight}{7pt}
+    \begin{tabular}{ |c|c|c| }
+        \hline
+        \textbf{Parameter} & \textbf{Bacco} & \textbf{LoRaWAN}\\
+        \hline
+        ToA & 51.6 ms & 71.8 ms\\
+        Transmission energy & 21.3 mJ & 30.8 mJ\\
+        \hline
+    \end{tabular}
+\end{table}
 
 \begin{figure}[ht]
     \centering
@@ -133,15 +213,9 @@ a downlink is sent every packet (confirmation);
     \vspace{-0.7cm}
     \includegraphics[width=1.0\textwidth]{images/lorawan_SF7_14dbm_125khz_power.pdf}
     \caption{Power draw of Bacco (in red) and LoRaWAN (in blue) during the transmission of a packet with a payload of 15
-    bytes, using SF7, 14dBm, 125kHz bandwidth}
-    \label{bacco SF7}
+    bytes, using SF7, at 14dBm TX power and 125kHz bandwidth}
+    \label{img: packet}
 \end{figure}
-
-Bacco:\\
-delta time is 51.6ms and total energy is 21.3mJ
-\\\\
-LoRaWAN:\\
-delta time is 71.8ms and total energy is 30.8mJ
 
 \subsection{Packet Error Rate}
 Crunch some fking data from FTP server

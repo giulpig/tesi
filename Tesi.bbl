@@ -336,5 +336,16 @@
     \field{month}{02}
     \field{year}{2005}
   \endentry
+
+  \entry{ab01}{manual}{}
+    \list{organization}{1}{%
+      {Heltec}%
+    }
+    \field{labeltitlesource}{title}
+    \field{title}{AB01 product page and datasheet}
+    \verb{url}
+    \verb https://heltec.org/project/htcc-ab01/
+    \endverb
+  \endentry
 \enddatalist
 \endinput

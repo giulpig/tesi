@@ -16,7 +16,7 @@ network is built upon 4 categories of devices:
     \item [Web server] - receives data coming from the Gateways, elaborates it, and makes it available to the user. Note
         that the scheme of communication involving this device is not covered by Bacco.
 \end{description}
-\\
+
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1.0\textwidth]{uml/network_stack.pdf}
@@ -227,7 +227,6 @@ not yet have an allocated time frame and thus can not decide when to transmit ot
     \end{algorithmic}
 \end{algorithm}
 
-
 \section{Network Joining}
 When a Sender node needs to connect to the network for the first time, it does not yet have an identifier nor its clock
 is in sync. The procedure to achieve that will be called the joining process. Note that we assume that the
@@ -268,7 +267,7 @@ The following commands are defined by the protocol, and each of them is associat
     \item [Decrease transmission power] - If this command is processed successfully, the Sender decreases its
         transmission power by $P_{step}= 3 \text{ dBm}$.
 \end{description}
-\\
+
 \begin{table}[ht]
     \caption{Table of opcodes.}
     \label{tab: opcodes}
@@ -319,7 +318,7 @@ TX adaption parameters}:
         satisfy $\text{RSSI} < \text{RSSI}_{low}$ or have not been received, then a command is sent telling to
         increase the transmission power by $P_{step}$.
 \end{itemize}
-\\
+
 \begin{table}[ht]
     \caption{Parameters for transmit power adaption algorithm.}
     \label{tab: TX adaption parameters}
@@ -348,6 +347,7 @@ possible delivery rate.
 
 
 \section{Packet Format}
+\label{sec: packet format}
 In this section, the bit format of the messages is shown. The analysis will be split between uplink packets and downlink
 packets.
 
@@ -371,18 +371,18 @@ length defined by the previous field. Figure \ref{img: uplink packet format} sho
     \label{img: uplink packet format}
 \end{figure}
 
-
 \subsection{Downlink Packet Format}
 \label{sec: downlink packet format}
-Downlink messages are sent from a Gateway to a Sender/Repeater or from a Repeater to a Sender. It has a fixed
-length of 5 bytes and it is transmitted using down-chirps, i.e., with \gls{IQ} inversion enabled. The least significant
-byte contains the identifier of the Sender for which the message is directed as an 8-bit unsigned integer. The
-following bit contains the type of the message: 0 represents a time sync message whereas 1 represents a command
-message. The content of the following bits depend on the type of message: in the case of a time sync message, the
-remaining 31 bits contain the timestamp, whereas in the case of a command message, the first 7 bits contain an opcode and
-the remaining 14 bits are left for padding and can be later used by future revisions of the protocol. Figure \ref{img:
-downlink packet format}, \ref{img: downlink timestamp packet format}, \ref{img: downlink command packet format} show the
-general format, the timestamp format, and the command format respectively.
+Downlink messages are sent from a Gateway to a Sender/Repeater or from a Repeater to a Sender. They have a fixed
+length of 5 bytes and are is transmitted using down-chirps, i.e., with \gls{IQ} inversion enabled. Since the size of each
+packet is pre-defined, LoRa's implicit header mode is used, that means that no physical layer header is added to the
+\gls{MAC} layer packet. The least significant byte contains the identifier of the Sender for which the message is
+directed as an 8-bit unsigned integer. The following bit contains the type of the message: 0 represents a time sync
+message whereas 1 represents a command message. The content of the following bits depend on the type of message: in the
+case of a time sync message, the remaining 31 bits contain the timestamp, whereas in the case of a command message, the
+first 7 bits contain an opcode and the remaining 14 bits are left for padding and can be later used by future revisions
+of the protocol. Figure \ref{img: downlink packet format}, \ref{img: downlink timestamp packet format}, \ref{img:
+downlink command packet format} show the general format, the timestamp format, and the command format respectively.
 
 \vspace{1cm}
 \newcommand{\bitlabel}[2]{%
@@ -428,6 +428,7 @@ general format, the timestamp format, and the command format respectively.
 \end{figure}
 
 \subsection{Comparing Bacco And LoRaWAN Packet Formats}
+\label{sec: lorawan uplink packet format}
 We will now compare Bacco's packet format to LoRaWAN's. The latter is described thoroughly by Semtech's official
 documentation
 \cite{lorawan_packets}, a schematic reference can be found in
@@ -453,7 +454,7 @@ the overhead associated with each protocol.
 \label{subsec: bacco and lorawan uplink packet format}
 Considering two uplink packets containing the same payload and transmitted with the two protocols under
 analysis, we can observe that Bacco uplink packets feature a fixed header size of 2 bytes as described in Section \ref{sec:
-uplink packet format}, while LoRaWAN uses a MAC header size that varies between 7 and 23 bytes.\\
+uplink packet format}, while LoRaWAN uses a \gls{MAC} header size that varies between 7 and 23 bytes.\\
 To show that, we can consider an empty \textit{Frame Payload} and sum all the other
 fields' sizes to get the overall header size. LoRaWAN supports a range of sizes for the uplink packets; the lower bound
 is given by Frame Header: 7 + Frame Port: 0; the upper bound is given by Frame Header: 22 + Frame Port: 1. This means
