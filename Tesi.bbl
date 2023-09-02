@@ -126,6 +126,106 @@
     \field{year}{1985}
   \endentry
 
+  \entry{lora_research_1}{book}{}
+    \name{author}{3}{}{%
+      {{hash=BM}{%
+         family={Bor},
+         familyi={B\bibinitperiod},
+         given={Martin},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=VJE}{%
+         family={Vidler},
+         familyi={V\bibinitperiod},
+         given={John\bibnamedelima Edward},
+         giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod},
+      }}%
+      {{hash=RU}{%
+         family={Roedig},
+         familyi={R\bibinitperiod},
+         given={Utz},
+         giveni={U\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Junction Publishing}%
+    }
+    \strng{namehash}{BMVJERU1}
+    \strng{fullhash}{BMVJERU1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{isbn}{9780994988607}
+    \field{title}{LoRa for the Internet of Things}
+    \verb{url}
+    \verb https://eprints.lancs.ac.uk/id/eprint/77615
+    \endverb
+    \field{year}{2017}
+  \endentry
+
+  \entry{lora_research_2}{article}{}
+    \name{author}{4}{}{%
+      {{hash=AA}{%
+         family={Augustin},
+         familyi={A\bibinitperiod},
+         given={Aloÿs},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=YJ}{%
+         family={Yi},
+         familyi={Y\bibinitperiod},
+         given={Jiazi},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=CT}{%
+         family={Clausen},
+         familyi={C\bibinitperiod},
+         given={Thomas},
+         giveni={T\bibinitperiod},
+      }}%
+      {{hash=TWM}{%
+         family={Townsley},
+         familyi={T\bibinitperiod},
+         given={William\bibnamedelima Mark},
+         giveni={W\bibinitperiod\bibinitdelim M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AAYJCT+1}
+    \strng{fullhash}{AAYJCTTWM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{abstract}{%
+    LoRa is a long-range, low-power, low-bitrate, wireless telecommunications system, promoted as an infrastructure solution for the Internet of Things: end-devices use LoRa across a single wireless hop to communicate to gateway(s), connected to the Internet and which act as transparent bridges and relay messages between these end-devices and a central network server. This paper provides an overview of LoRa and an in-depth analysis of its functional components. The physical and data link layer performance is evaluated by field tests and simulations. Based on the analysis and evaluations, some possible solutions for performance enhancements are proposed.%
+    }
+    \verb{doi}
+    \verb 10.3390/s16091466
+    \endverb
+    \field{issn}{1424-8220}
+    \field{number}{9}
+    \field{title}{A Study of LoRa: Long Range &amp; Low Power Networks for the Internet of Things}
+    \verb{url}
+    \verb https://www.mdpi.com/1424-8220/16/9/1466
+    \endverb
+    \field{volume}{16}
+    \field{journaltitle}{Sensors}
+    \field{year}{2016}
+  \endentry
+
+  \entry{lora_marketshare}{report}{}
+    \field{labeltitlesource}{title}
+    \field{title}{LoRa and LoRaWAN IoT Market by Offering (Hardware, Platforms, and Services), Application (Smart Cities, Industrial IoT, Smart Healthcare), End User (Retail, Manufacturing, Healthcare, Energy & Utilities, Residential) and Region - Global Forecast to 2028}
+    \verb{url}
+    \verb https://www.researchandmarkets.com/reports/5821213/lora-lorawan-iot-m
+    \verb arket-offering-hardware?utm_source=GNE&utm_medium=PressRelease&utm_co
+    \verb de=239mpc&utm_campaign=1868182+-+LoRa+and+LoRaWAN+IoT+Markets+-+Globa
+    \verb l+Forecast+to+2028+-+Increasing+Smart+City+Initiatives+%26+Rising+Ado
+    \verb ption+of+Intelligent+Devices+Bolsters+Growth&utm_exec=chdo54prd
+    \endverb
+    \list{institution}{2}{%
+      {Research And Markets}%
+    }
+    \field{type}{techreport}
+  \endentry
+
   \entry{lorawan_agriculture_1}{inproceedings}{}
     \name{author}{5}{}{%
       {{hash=DD}{%
@@ -346,6 +446,30 @@
     \verb{url}
     \verb https://heltec.org/project/htcc-ab01/
     \endverb
+  \endentry
+
+  \entry{iot_marketshare}{report}{}
+    \name{author}{1}{}{%
+      {{hash=VLS}{%
+         family={Vailshery},
+         familyi={V\bibinitperiod},
+         given={Lionel\bibnamedelima Sujay},
+         giveni={L\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{VLS1}
+    \strng{fullhash}{VLS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{Number of Internet of Things (IoT) connected devices worldwide from 2019 to 2023, with forecasts from 2022 to 2030}
+    \verb{url}
+    \verb https://www.statista.com/statistics/1183457/iot-connected-devices-wor
+    \verb ldwide/
+    \endverb
+    \list{institution}{1}{%
+      {Statista}%
+    }
+    \field{type}{techreport}
   \endentry
 \enddatalist
 \endinput

@@ -1,20 +1,11 @@
-
-% TODO: not relevant here, move to introduction
-%Agricultural technologies have been a source of innovation since the dawn of humanity. The quest for more efficient food
-%production has driven significant research, and above all, automation stands out as a paramount achievement in the
-%modern world. A great tool to improve the automation process is \gls{IoT}, a concept that refers to the interconnection
-%of physical devices in a diffused network; each device collects valuable and localized information that is used to
-%improve efficiency, productivity, and decision making.\\
-
-The purpose of this chapter is to delineate the advantages and prerequisites of implementing \gls{IoT} in agriculture.
-Additionally, it aims to introduce Bacco: the protocol that constitutes the fundamental core of this thesis. Furthermore,
-we will introduce an alternative approach. Specifically, we will provide a concise overview of the \gls{LoRaWAN}
-protocol, emphasizing certain illustrative use-case scenarios.
+The purpose of this chapter is to delineate the advantages and prerequisites of implementing \gls{IoT} in agriculture,
+and in particular its implementations that make use of \glspl{LPWAN}. It also aims to introduce Bacco: the
+protocol that constitutes the fundamental core of this thesis, along with an alternative approach.
+Specifically, we will provide a concise overview of the \gls{LoRaWAN} protocol, emphasizing certain illustrative
+use-case scenarios.
 
 \section{Benefits}
 \label{sec: benefits}
-%The refinement of automation systems used in agriculture has been a constant interest throughout the history of
-%industry due to the huge positive impact it has brought to society.
 If \gls{IoT} is integrated into agricultural contexts, it can bring lots of benefits to production:
 \begin{itemize}
     \item Precision farming: IoT devices enable farmers to collect real-time data on environmental variables. This data
@@ -68,7 +59,7 @@ One of the most promising technologies in \gls{IoT} is \gls{LoRaWAN}, an open pr
 Semtech's LoRa modulation. It provides all the necessary software components to build a network
 that is reliable, power efficient and scalable, according to extensive research and testing. See
 \cite{lorawan_agriculture_1} and \cite{lorawan_agriculture_2} for reference.\\
-A LoRaWAN network consists of sender nodes and gateways. When a sender node broadcasts a LoRa packetpacket, it can be
+A LoRaWAN network consists of sender nodes and gateways. When a sender node broadcasts a LoRa packet, it can be
 received by one or more gateways, that can store the information or forward it to a web server through the Internet.
 These kind of messages are called uplinks. Gateways might need to transmit data to the sender nodes and these kind of messages
 are called downlinks. Gateways can be self-owned with a custom configuration or can be part of an existing community

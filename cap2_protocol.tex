@@ -1,4 +1,4 @@
-The goal of this chapter is to give a description of the Bacco protocol and to discuss the
+The goal of this chapter is to give a detailed description of the Bacco protocol and to discuss the
 implementation choices that were made to deploy it. This is achieved using a top-down ordering for the level
 of detail, meaning that the overview is presented before the specifics.
 
@@ -34,8 +34,8 @@ children, so they correspond to the leaves of the tree.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1.0\linewidth]{uml/network_topology.pdf}
-    \caption{Example network topology}
+    \includegraphics[width=0.7\linewidth]{uml/network_topology.pdf}
+    \caption{Bacco network topology}
     \label{network topology img}
 \end{figure}
 
@@ -54,7 +54,7 @@ devices, thus it is necessary to define methods for doing so, to minimize interf
 a reliable exchange of information. Different techniques are applied in the domain of both time and frequency.
 
 \subsection{Channel Activity Detection}
-\Gls{CAD} is a feature available for most LoRa transcievers \cite{cad}. In this mode, the LoRa node
+\Gls{CAD} is a feature available for most LoRa transceivers \cite{cad}. In this mode, the LoRa node
 listens for any transmission on a specific frequency and, if it detects a signal, an interrupt is returned to the
 \gls{MCU}. This
 presents a possible \gls{CSMA} mechanism.\\
@@ -70,39 +70,6 @@ Bacco uses this technique to discriminate between uplink messages (i.e., from Se
 Gateway/Repeater or from Repeater to Gateway) and downlink messages (i.e., from Gateway to Sender/Repeater or from
 Repeater to Sender). This implies that Sender nodes and Gateway nodes are not able to communicate with other devices of
 the same category (e.g. a Sender would not detect any transmission coming from a Sender).
-
-%\begin{figure}[ht]
-%\centering
-%\begin{subfigure}[b]{0.45\linewidth}
-%\begin{subfigure}[b]{\linewidth}
-%\begin{tikzpicture}
-%\begin{axis}[width=\linewidth, height=4cm, title={\textbf{Up-chirp}}, xlabel={Time [ms]}, ylabel={Amplitude [V]}]
-%\addplot[color=red, samples=500][domain=0:1]{sin(x*x*5000)};
-%\end{axis}
-%\end{tikzpicture}
-%\end{subfigure}
-%\begin{subfigure}[b]{\linewidth}
-%\begin{tikzpicture}
-%\begin{axis}[width=\linewidth, height=4cm, title={\textbf{Down-chirp}}, xlabel={Time [ms]}, ylabel={Amplitude [V]}]
-%\addplot[color=blue, samples=500][domain=0:1]{sin(5000*(1-x)*(1-x))};
-%\end{axis}
-%\end{tikzpicture}
-%\end{subfigure}
-%\end{subfigure}
-%\hspace{0.08\linewidth}
-%\begin{subfigure}[b]{0.45\linewidth}
-%\begin{tikzpicture}
-%\begin{axis}[width=\linewidth, height=8cm + \baselineskip, title={\textbf{Frequency plot}}, xlabel={Time
-%[ms]}, ylabel={Frequency [Hz]}, ytick={0, 0.5, 1}, yticklabels={$F_0-\frac{B}{2}$, $F_0$, $F_0+\frac{B}
-%{2}$}, legend entries={Down-chirp, Up-chirp}]
-%\addplot[line width=0.5mm, color=blue, samples=500][domain=0:1]{1-x};
-%\addplot[line width=0.5mm, color=red, samples=500][domain=0:1]{x};
-%\end{axis}
-%\end{tikzpicture}
-%\end{subfigure}
-%\caption{IQ inversion.}
-%\label{img: iq inversion}
-%\end{figure}
 
 \subsection{Subnetting}
 The LoRa protocol supports a wide range of carrier frequencies in the \gls{VHF} spectrum \footnote{For reference, the
@@ -459,7 +426,7 @@ To show that, we can consider an empty \textit{Frame Payload} and sum all the ot
 fields' sizes to get the overall header size. LoRaWAN supports a range of sizes for the uplink packets; the lower bound
 is given by Frame Header: 7 + Frame Port: 0; the upper bound is given by Frame Header: 22 + Frame Port: 1. This means
 that, at a fixed payload size, Bacco uplink packets are always shorter by a constant factor between 5 and 21 bytes.
-Figure \ref{img: uplink packet size} shows a plot of the total size of an uplink packet compared to its payload lenght,
+Figure \ref{img: uplink packet size} shows a plot of the total size of an uplink packet compared to its payload length,
 using both Bacco and LoRaWAN.
 
 \begin{figure}[ht]

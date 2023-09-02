@@ -98,11 +98,11 @@ where
 To demonstrate the use of the Equation \ref{eqn: duty cycle} to calculate the duty cycle, we will now consider a network
 with the following properties:
 \begin{itemize}
-    \item the electromagnetic interference is neglectable and each packet gets delivered with an error rate of 0;
+    \item the electromagnetic interference is negligible and each packet gets delivered with an error rate of 0;
     \item each Sender node has a transmission period of $T = 10\ \mathrm{ min} = 360\ \mathrm{s}$;
     \item each Sender node transmits a packet with a payload that has a length in bytes equal to
         $\mathit{N_{bytes_{MAC\_payload}}} = 15$;
-    \item the devices in the network operate at a frequency of 868.0 Mhz on the Italian territory, and thus have to
+    \item the devices in the network operate at a frequency of 868.0 MHz on the Italian territory, and thus have to
         respect the duty cycle limit of $\mathit{d_{max}} = 1\% = 0.01$;
     \item the devices in the network operate at a spreading factor equal to $\mathit{SF} = 7$;
     \item the devices in the network operate at a bandwidth equal to $\mathit{BW} = 125\ \mathrm{kHz}$;
@@ -226,9 +226,9 @@ Bacco. Here follows a list of the conditions under which the experiment was cond
     \item \textbf{Gateway node}: Espressif ESP32 MCU, equipped with Semtech SX1276 LoRa module
     \item \textbf{LoRa configuration}: Uplink MAC payloads with size varying between 7 and 23 bytes, spreading factor set to 7,
         output power set to 5 dBm, bandwidth set to 125 kHz.
-    \item \textbf{Displacement}: The Sendrers were placed approximately 200 m away from the Gateway with no clear line
+    \item \textbf{Displacement}: The Senders were placed approximately 200 m away from the Gateway with no clear line
         of sight as they were placed in between vineyards.
-    \item \textbf{Signal strenght and noise}: The average \gls{RSSI} was -102 dBm and the average \gls{SNR} was 1 dBm.
+    \item \textbf{Signal strength and noise}: The average \gls{RSSI} was -102 dBm and the average \gls{SNR} was 1 dBm.
     \item \textbf{Cycle time and total duration}: The transmission cycle was set to 1 hour and the experiment
         lasted a total of 2 weeks; the total number of transmitted packets was 1008.
 \end{itemize}
